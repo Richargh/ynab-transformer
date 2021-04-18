@@ -1,8 +1,8 @@
 package de.richargh.ynabcsvtransformer.input
 
 import de.richargh.ynabcsvtransformer.domain.Transaction
-import de.richargh.ynabcsvtransformer.lang.MultiValueMap
-import de.richargh.ynabcsvtransformer.lang.mutableMultiValueMapOf
+import de.richargh.ynabcsvtransformer.domain.beneficiary
+import de.richargh.ynabcsvtransformer.domain.description
 import org.apache.commons.csv.CSVFormat
 import org.apache.commons.csv.CSVParser
 import org.apache.commons.csv.CSVRecord
@@ -39,10 +39,11 @@ class CsvImporter {
 
     private fun mapTransaction(csvRecord: CSVRecord): Transaction? {
         val beneficiary = csvRecord.get(indexOf[DomainName.Beneficiary]!!)
+        val description = csvRecord.get(indexOf[DomainName.Description]!!)
         if(beneficiary.isNullOrBlank())
             return null
 
-        return Transaction(beneficiary)
+        return Transaction(beneficiary(beneficiary), description(description))
     }
 
     private fun matchColumnHeaders(csvRecord: CSVRecord, mappings: CsvMappings): Boolean {
@@ -87,6 +88,7 @@ class CsvMappings private constructor(
 
 sealed class DomainName {
     object Beneficiary : DomainName()
+    object Description : DomainName()
 
     companion object {
         val objects get() = DomainName::class.sealedSubclasses.mapNotNull { it.objectInstance }.toSet()
