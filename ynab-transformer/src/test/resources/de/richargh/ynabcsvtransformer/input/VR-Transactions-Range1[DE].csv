@@ -1,0 +1,29 @@
+﻿"Cool Bank"
+
+"Umsatzanzeige"
+
+"BLZ:";"201006004";;"Datum:";"01.04.2020"
+"Konto:";"123456";;"Uhrzeit:";"17:48:01"
+"Abfrage von:";"Tom Marcellus Jive";;"Kontoinhaber:";"Tom Marcellus Jive"
+
+"Zeitraum:";;"von:";"01.03.2020";"bis:";"31.03.2020"
+"Betrag in EUR:";;"von:";" ";"bis:";" "
+"Sortiert nach:";"Buchungstag";"absteigend"
+
+"Buchungstag";"Valuta";"Auftraggeber/Zahlungsempf�nger";"Empf�nger/Zahlungspflichtiger";"Konto-Nr.";"IBAN";"BLZ";"BIC";"Vorgang/Verwendungszweck";"Kundenreferenz";"W�hrung";"Umsatz";" "
+"31.03.2020";"31.03.2020";"Tom Jive";"Tom Marcellus Jive";;"DE20100600400000123456";;"GERMANY1OCU";"DAUERAUFTRAG
+Monatliche Abgabe EREF: 000
+000009999";;"EUR";"300,00";"H"
+"23.03.2020";"23.03.2020";"ISSUER";"Worldline Sweden AB fuer Clamp";;"DE20100600400000123456";;"GERMANY1OCU";"BASISLASTSCHRIFT
+SHELL 1122/ Frankfurt/DE
+22.03.2021 um 09:12:34 Uhr
+70011222/077888/ECTL/
+201006004/00000123456/0/2222
+REF 998888/000111";;"EUR";"33,33";"S"
+"22.02.2020";"22.02.2020";"ISSUER";"EDEKA";;"DE20100600400000123456";;"GERMANY1OCU";"BASISLASTSCHRIFT
+EDEKA
+E
+22.02.2020 um 08:27:15 Uhr";;"EUR";"100,42";"S"
+
+"02.03.2020";;;;;;;;;"Anfangssaldo";"EUR";"1.444,00";"H"
+"31.03.2020";;;;;;;;;"Endsaldo";"EUR";"1.111,66";"H"

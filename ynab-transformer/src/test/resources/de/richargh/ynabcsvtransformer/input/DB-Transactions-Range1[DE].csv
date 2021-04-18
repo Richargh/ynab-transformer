@@ -1,0 +1,11 @@
+﻿Ums‰tze persˆnliches Konto (00);;;Kundennummer: 345 10020030
+01.02.2020 - 28.02.2020
+Letzter Kontostand;;;;42.420,42;EUR
+Vorgemerkte und noch nicht gebuchte Ums‰tze sind nicht Bestandteil dieser ‹bersicht.
+Buchungstag;Wert;Umsatzart;Beg¸nstigter / Auftraggeber;Verwendungszweck;IBAN;BIC;Kundenreferenz;Mandatsreferenz ;Gl‰ubiger ID;Fremde Geb¸hren;Betrag;Abweichender Empf‰nger;Anzahl der Auftr‰ge;Anzahl der Schecks;Soll;Haben;W‰hrung
+01.02.2020;01.02.2020;"SEPA-Dauerauftrag an";Jonas Vogel;RINP Dauerauftrag Bla;DE12345;HELLO;;;;;;;;;-17,30;;EUR
+14.02.2020;14.02.2020;"SEPA-Lastschrift von";ANACONDA EU S.A R.L., NIEDERLASSUNG DEUTSCHLAND;111-222222-3333333 Anaconda.de;DE999;TUBDEPP;42SUPP;CULATER;DE24FOOO;;;;;;-150,12;;EUR
+19.02.2020;19.02.2020;"SEPA-Gutschrift von";ANACONDA PAYMENTS EUROPE S.C.A.;222-3333333-44444444 DMZ Demilli;DE8711;TUBDEPP;43SUPP;;;;;;;;;42,42;EUR
+23.03.2020;23.03.2020;"SEPA-‹berweisung an";Vegeta;-;DE747;COBRAKAI;44SUPP;;;;;;;;-9.000,01;;EUR
+27.02.2020;27.02.2020;"SEPA-Gehalt/Pension von";Mike Masters Big Corp GmbH;SALA Lohn/Gehalt LOHN / GEHALT 02/20;DE123581321;HYVEMIND;45-SUPP;;;;;;;;;1.337,00;EUR
+Kontostand;28.02.2020;;;10.123,78;EUR

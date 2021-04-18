@@ -1,0 +1,15 @@
+= YNAB Csv Transformer
+
+Transforms bank Csv into a Csv compatible with link:https://www.youneedabudget.com/[Ynab Classic] (deprecated).
+
+== Features
+
+* Bank Csv to Ynab Csv transformation
+* TOML Markup to modify transformation
+* Java 8
+* Maven
+
+== Getting Started
+
+* Use Java 8 (via link:https://sdkman.io/[sdkman] man that's done by `sdk use java 8.0.xxx`)
+* Build&Test `mvn test`

@@ -1,0 +1,22 @@
+﻿"Cool Bank"
+
+"Umsatzanzeige"
+
+"BLZ:";"201006004";;"Datum:";"01.04.2020"
+"Konto:";"123456";;"Uhrzeit:";"17:48:01"
+"Abfrage von:";"Tom Marcellus Jive";;"Kontoinhaber:";"Tom Marcellus Jive"
+
+"Zeitraum:";;"von:";"22.03.2020";"bis:";"31.03.2020"
+"Betrag in EUR:";;"von:";" ";"bis:";" "
+"Sortiert nach:";"Buchungstag";"absteigend"
+
+"Buchungstag";"Valuta";"Auftraggeber/Zahlungsempf�nger";"Empf�nger/Zahlungspflichtiger";"Konto-Nr.";"IBAN";"BLZ";"BIC";"Vorgang/Verwendungszweck";"Kundenreferenz";"W�hrung";"Umsatz";" "
+"23.03.2020";"23.03.2020";"ISSUER";"Worldline Sweden AB fuer Clamp";;"DE20100600400000123456";;"GERMANY1OCU";"BASISLASTSCHRIFT
+SHELL 1122/ Frankfurt/DE
+22.03.2021 um 09:12:34 Uhr
+70011222/077888/ECTL/
+201006004/00000123456/0/2222
+REF 998888/000111";;"EUR";"33,33";"S"
+
+"22.03.2020";;;;;;;;;"Anfangssaldo";"EUR";"1.333,33";"H"
+"31.03.2020";;;;;;;;;"Endsaldo";"EUR";"1.000,00";"H"
