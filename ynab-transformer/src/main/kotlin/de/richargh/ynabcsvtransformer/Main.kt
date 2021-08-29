@@ -4,6 +4,10 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.fasterxml.jackson.module.kotlin.readValue
 import de.richargh.ynabcsvtransformer.config.CsvConfigDto
+import de.richargh.ynabcsvtransformer.export.YnabCsvExporter
+import de.richargh.ynabcsvtransformer.input.CsvImporter
+import de.richargh.ynabcsvtransformer.input.CsvMappings
+import de.richargh.ynabcsvtransformer.input.DomainName
 import picocli.CommandLine
 import picocli.CommandLine.*
 import java.io.File
@@ -28,10 +32,20 @@ class Checksum : Callable<Int> {
         if(filesExist != 0)
             return filesExist
 
+        val mappings = mappings()
+        val importer = CsvImporter()
+        val exporter = YnabCsvExporter()
+        val results = importer.mapTransactions(csv.inputStream(), mappings)
+        exporter.mapTransactions(results)
+        return 0
+    }
+
+    private fun mappings(): CsvMappings {
         val mapper = ObjectMapper().registerModule(KotlinModule())
         val csvConfigDto = mapper.readValue<CsvConfigDto>(config)
-        println(csvConfigDto)
-        return 0
+        return CsvMappings.of(
+                DomainName.Beneficiary to csvConfigDto.header.beneficiary,
+                DomainName.Description to csvConfigDto.header.description)
     }
 
     private fun ensureFilesExist(): Int {
