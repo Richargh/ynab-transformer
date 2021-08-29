@@ -17,6 +17,7 @@
         <!-- Main -->
         <picocli.version>4.6.1</picocli.version>
         <commons-csv.version>1.8</commons-csv.version>
+        <jackson.version>2.9.8</jackson.version>
         <!-- Test -->
         <assertj.version>3.19.0</assertj.version>
         <junit.version>5.7.1</junit.version>

@@ -1,11 +1,12 @@
 package de.richargh.ynabcsvtransformer
 
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.KotlinModule
+import com.fasterxml.jackson.module.kotlin.readValue
+import de.richargh.ynabcsvtransformer.config.CsvConfigDto
 import picocli.CommandLine
 import picocli.CommandLine.*
 import java.io.File
-import java.math.BigInteger
-import java.nio.file.Files
-import java.security.MessageDigest
 import java.util.concurrent.Callable
 import kotlin.system.exitProcess
 
@@ -27,8 +28,9 @@ class Checksum : Callable<Int> {
         if(filesExist != 0)
             return filesExist
 
-        val fileContents = Files.readAllBytes(csv.toPath())
-        println(fileContents)
+        val mapper = ObjectMapper().registerModule(KotlinModule())
+        val csvConfigDto = mapper.readValue<CsvConfigDto>(config)
+        println(csvConfigDto)
         return 0
     }
 
