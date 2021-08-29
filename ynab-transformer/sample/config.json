@@ -1,0 +1,9 @@
+{
+  "dateTimePattern": "MM/dd/uuuu",
+  "header": {
+    "bookingDate": "Booking date",
+    "beneficiary": "Beneficiary / Originator",
+    "description": "Payment Details",
+    "outflow": "Debit"
+  }
+}

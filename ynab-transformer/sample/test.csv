@@ -1,0 +1,8 @@
+Transactions persˆnliches Konto (00);;;Customer number: 345 10020030
+02/01/2020 - 02/28/2020
+Old balance;;;;42,420.42;EUR
+Transactions pending are not included in this report.
+Booking date;Value date;Transaction Type;Beneficiary / Originator;Payment Details;IBAN;BIC;Customer Reference;Mandate Reference;Creditor ID;Compensation amount;Original Amount;Ultimate creditor;Number of transactions;Number of cheques;Debit;Credit;Currency
+02/14/2020;02/14/2020;"SEPA-Direct Debit";ANACONDA EU;111-222222-3333333 Anaconda.de;DE999;TUBDEPP;42SUPP;CULATER;DE24FOOO;;;;;;-150.12;;EUR
+Account balance;02/28/2020;;;10,123.78;EUR
+
