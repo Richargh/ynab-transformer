@@ -15,6 +15,7 @@
         <!-- Language -->
         <kotlin.version>1.4.31</kotlin.version>
         <!-- Main -->
+        <picocli.version>4.6.1</picocli.version>
         <commons-csv.version>1.8</commons-csv.version>
         <!-- Test -->
         <assertj.version>3.19.0</assertj.version>
@@ -41,9 +42,19 @@
             </dependency>
             <!-- Main -->
             <dependency>
+                <groupId>info.picocli</groupId>
+                <artifactId>picocli</artifactId>
+                <version>${picocli.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-csv</artifactId>
                 <version>${commons-csv.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.module</groupId>
+                <artifactId>jackson-module-kotlin</artifactId>
+                <version>${jackson.version}</version>
             </dependency>
             <!-- Test -->
             <dependency>
