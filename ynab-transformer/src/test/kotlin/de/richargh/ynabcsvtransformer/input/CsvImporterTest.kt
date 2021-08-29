@@ -3,10 +3,11 @@ package de.richargh.ynabcsvtransformer.input
 import de.richargh.ynabcsvtransformer.domain.Transaction
 import de.richargh.ynabcsvtransformer.domain.beneficiary
 import de.richargh.ynabcsvtransformer.domain.description
-import de.richargh.ynabcsvtransformer.input.DomainName.Beneficiary
-import de.richargh.ynabcsvtransformer.input.DomainName.Description
+import de.richargh.ynabcsvtransformer.input.DomainName.*
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 internal class CsvImporterTest {
 
@@ -16,21 +17,27 @@ internal class CsvImporterTest {
         val csv = """
         "Buchung";"Empfänger";"Verwendungszweck";"Währung";"Umsatz"
         "21.02.2020";"John Mopp";"Laundry";"EUR";"120"
-        """
-        val mappings = CsvMappings.of(
+        """.trimIndent()
+        val csvConfig = CsvConfig(
+                DateTimeFormatter.ofPattern("dd.MM.uuuu"),
+                CsvHeaders.of(
+                BookingDate to "Buchung",
                 Beneficiary to "Empfänger",
-                Description to "Verwendungszweck")
+                Description to "Verwendungszweck",
+                Outflow to "Umsatz"))
         val testling = CsvImporter()
 
         // act
         val result = csv.byteInputStream().use {
             // act
-            testling.mapTransactions(it, mappings).toList()
+            testling.mapTransactions(it, csvConfig).toList()
         }
 
         // assert
         assertThat(result).containsExactly(Transaction(
-                beneficiary("John Mopp"), description("Laundry")))
+                LocalDate.of(2020,2,21),
+                beneficiary("John Mopp"),
+                description("Laundry")))
     }
 
     @Test
@@ -39,58 +46,75 @@ internal class CsvImporterTest {
         val csv = """
         "Buchung";"Empfänger";"Verwendungszweck";"Währung";"Umsatz"
         "21.02.2020";"John Mopp";"Laundry";"EUR";"120"
-        """
-        val mappings = CsvMappings.of(
+        """.trimIndent()
+        val csvConfig = CsvConfig(
+                DateTimeFormatter.ofPattern("dd.MM.uuuu"),
+                CsvHeaders.of(
+                BookingDate to "Buchung",
                 Beneficiary to "Empfänger",
-                Description to "Verwendungszweck")
+                Description to "Verwendungszweck",
+                Outflow to "Umsatz"))
         val testling = CsvImporter()
 
         // act
         val result = csv.byteInputStream().use {
             // act
-            testling.mapTransactions(it, mappings).toList()
+            testling.mapTransactions(it, csvConfig).toList()
         }
 
         // assert
         assertThat(result).containsExactly(Transaction(
-                beneficiary("John Mopp"), description("Laundry")))
+                LocalDate.of(2020,2,21),
+                beneficiary("John Mopp"),
+                description("Laundry")))
     }
 
     @Test
     fun `should be able to read english singular DB transaction`(){
         // arrange
-        val mappings = CsvMappings.of(
+        val csvConfig = CsvConfig(
+                DateTimeFormatter.ofPattern("MM/dd/uuuu"),
+                CsvHeaders.of(
+                BookingDate to "Booking date",
                 Beneficiary to "Beneficiary / Originator",
-                Description to "Payment Details")
+                Description to "Payment Details",
+                Outflow to "Debit"))
         val testling = CsvImporter()
 
         // act
         val result = javaClass.getResourceAsStream("DB-Transactions-Single1[EN].csv").use {
             // act
-            testling.mapTransactions(it, mappings).toList()
+            testling.mapTransactions(it, csvConfig).toList()
         }
 
         // assert
         assertThat(result).containsExactly(Transaction(
-                beneficiary("ANACONDA EU"), description("111-222222-3333333 Anaconda.de")))
+                LocalDate.of(2020,2,14),
+                beneficiary("ANACONDA EU"),
+                description("111-222222-3333333 Anaconda.de")))
     }
 
     @Test
     fun `should be able to read german singular VR transaction`(){
         // arrange
-        val mappings = CsvMappings.of(
+        val csvConfig = CsvConfig(
+                DateTimeFormatter.ofPattern("dd.MM.uuuu"),
+                CsvHeaders.of(
+                BookingDate to "Buchungstag",
                 Beneficiary to "Empf�nger/Zahlungspflichtiger",
-                Description to "Vorgang/Verwendungszweck")
+                Description to "Vorgang/Verwendungszweck",
+                Outflow to "Umsatz"))
         val testling = CsvImporter()
 
         // act
         val result = javaClass.getResourceAsStream("VR-Transactions-Single1[DE].csv").use {
             // act
-            testling.mapTransactions(it, mappings).toList()
+            testling.mapTransactions(it, csvConfig).toList()
         }
 
         // assert
         assertThat(result).containsExactly(Transaction(
+                LocalDate.of(2020,3,23),
                 beneficiary("Worldline Sweden AB fuer Clamp"),
                 description("""
                     BASISLASTSCHRIFT

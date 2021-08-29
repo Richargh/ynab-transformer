@@ -5,12 +5,14 @@ import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.fasterxml.jackson.module.kotlin.readValue
 import de.richargh.ynabcsvtransformer.config.CsvConfigDto
 import de.richargh.ynabcsvtransformer.export.YnabCsvExporter
+import de.richargh.ynabcsvtransformer.input.CsvConfig
 import de.richargh.ynabcsvtransformer.input.CsvImporter
-import de.richargh.ynabcsvtransformer.input.CsvMappings
+import de.richargh.ynabcsvtransformer.input.CsvHeaders
 import de.richargh.ynabcsvtransformer.input.DomainName
 import picocli.CommandLine
 import picocli.CommandLine.*
 import java.io.File
+import java.time.format.DateTimeFormatter
 import java.util.concurrent.Callable
 import kotlin.system.exitProcess
 
@@ -32,20 +34,24 @@ class Checksum : Callable<Int> {
         if(filesExist != 0)
             return filesExist
 
-        val mappings = mappings()
+        val csvConfig = csvConfig()
         val importer = CsvImporter()
         val exporter = YnabCsvExporter()
-        val results = importer.mapTransactions(csv.inputStream(), mappings)
+        val results = importer.mapTransactions(csv.inputStream(), csvConfig)
         exporter.mapTransactions(results)
         return 0
     }
 
-    private fun mappings(): CsvMappings {
+    private fun csvConfig(): CsvConfig {
         val mapper = ObjectMapper().registerModule(KotlinModule())
         val csvConfigDto = mapper.readValue<CsvConfigDto>(config)
-        return CsvMappings.of(
-                DomainName.Beneficiary to csvConfigDto.header.beneficiary,
-                DomainName.Description to csvConfigDto.header.description)
+        return CsvConfig(
+                DateTimeFormatter.ofPattern(csvConfigDto.dateTimePattern),
+                CsvHeaders.of(
+                        DomainName.BookingDate to csvConfigDto.header.bookingDate,
+                        DomainName.Beneficiary to csvConfigDto.header.beneficiary,
+                        DomainName.Description to csvConfigDto.header.description,
+                        DomainName.Outflow to csvConfigDto.header.outflow))
     }
 
     private fun ensureFilesExist(): Int {

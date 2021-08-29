@@ -1,7 +1,9 @@
 package de.richargh.ynabcsvtransformer.domain
 
+import java.time.LocalDate
+
 data class Transaction(
-//      val date
+        val date: LocalDate,
         val beneficiary: Beneficiary,
         val description: Description
 //        val debit: Money?,

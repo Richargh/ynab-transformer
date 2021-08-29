@@ -9,51 +9,58 @@ import org.apache.commons.csv.CSVRecord
 import java.io.InputStream
 import java.io.InputStreamReader
 import java.security.InvalidParameterException
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 class CsvImporter {
 
     private var indexOf: Map<DomainName, Int> = emptyMap()
     private val foundHeader: Boolean get() = indexOf.isNotEmpty()
 
-    fun mapTransactions(inputStream: InputStream, mappings: CsvMappings): Sequence<Transaction> {
+    fun mapTransactions(inputStream: InputStream, config: CsvConfig): Sequence<Transaction> {
         val csvParser = CSVFormat.DEFAULT
                 .withDelimiter(';')
                 .withQuote('"')
         return sequence {
             val records: CSVParser = csvParser.parse(InputStreamReader(inputStream))
             records.forEachIndexed { index, record ->
-                tryMap(index, record, mappings)?.let { yield(it) }
+                tryMap(index, record, config)?.let { yield(it) }
             }
         }
     }
 
-    private fun tryMap(index: Int, csvRecord: CSVRecord, mappings: CsvMappings): Transaction? = try {
+    private fun tryMap(index: Int, csvRecord: CSVRecord, config: CsvConfig): Transaction? = try {
         when {
-            foundHeader -> mapTransaction(csvRecord)
-            matchColumnHeaders(csvRecord, mappings) -> null
+            foundHeader -> mapTransaction(csvRecord, config.dateFormatter)
+            matchColumnHeaders(csvRecord, config.headers) -> null
             else -> null
         }
     } catch (e: Exception) {
         null
     }
 
-    private fun mapTransaction(csvRecord: CSVRecord): Transaction? {
+    private fun mapTransaction(csvRecord: CSVRecord, dateFormatter: DateTimeFormatter): Transaction? {
+        val dateString = csvRecord.get(indexOf[DomainName.BookingDate]!!)
+        val date = LocalDate.parse(dateString, dateFormatter)
         val beneficiary = csvRecord.get(indexOf[DomainName.Beneficiary]!!)
         val description = csvRecord.get(indexOf[DomainName.Description]!!)
         if(beneficiary.isNullOrBlank())
             return null
 
-        return Transaction(beneficiary(beneficiary), description(description))
+        return Transaction(
+                date,
+                beneficiary(beneficiary),
+                description(description))
     }
 
-    private fun matchColumnHeaders(csvRecord: CSVRecord, mappings: CsvMappings): Boolean {
+    private fun matchColumnHeaders(csvRecord: CSVRecord, headerMappings: CsvHeaders): Boolean {
         val indexOfMappableColumn = csvRecord.asSequence()
                 .mapIndexed { index, value -> CsvColumn(value) to index }
-                .filter { (column, index) -> column in mappings }
-                .map { (column, index) -> mappings[column] to index }
+                .filter { (column, index) -> column in headerMappings }
+                .map { (column, index) -> headerMappings[column] to index }
                 .toMap()
 
-        val foundHeaders = indexOfMappableColumn.size == mappings.size
+        val foundHeaders = indexOfMappableColumn.size == headerMappings.size
         if(foundHeaders)
             this.indexOf = indexOfMappableColumn
         return foundHeaders
@@ -61,7 +68,12 @@ class CsvImporter {
 
 }
 
-class CsvMappings private constructor(
+class CsvConfig(
+        val dateFormatter: DateTimeFormatter,
+        val headers: CsvHeaders
+)
+
+class CsvHeaders private constructor(
         val nameOfColumn: Map<CsvColumn, DomainName>) {
 
     operator fun get(csvColumn: CsvColumn): DomainName = nameOfColumn[csvColumn]!!
@@ -69,7 +81,7 @@ class CsvMappings private constructor(
     val size get() = nameOfColumn.size
 
     companion object {
-        fun of(vararg domainNameToCsvColumn: Pair<DomainName, String>): CsvMappings {
+        fun of(vararg domainNameToCsvColumn: Pair<DomainName, String>): CsvHeaders {
             val map = mutableMapOf<CsvColumn, DomainName>()
             domainNameToCsvColumn.forEach {
                 val key = it.first
@@ -81,14 +93,16 @@ class CsvMappings private constructor(
                     map.values.toSet()
             if (missingDomainNames.isNotEmpty())
                 throw InvalidParameterException("All domain names must have a mapping. Missing are $missingDomainNames")
-            return CsvMappings(map)
+            return CsvHeaders(map)
         }
     }
 }
 
 sealed class DomainName {
+    object BookingDate : DomainName()
     object Beneficiary : DomainName()
     object Description : DomainName()
+    object Outflow : DomainName()
 
     companion object {
         val objects get() = DomainName::class.sealedSubclasses.mapNotNull { it.objectInstance }.toSet()

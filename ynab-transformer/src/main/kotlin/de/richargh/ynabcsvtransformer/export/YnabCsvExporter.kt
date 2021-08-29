@@ -7,7 +7,7 @@ class YnabCsvExporter {
     fun mapTransactions(transactions: Sequence<Transaction>) {
         println("Date;Payee;Category;Memo;Outflow;Inflow")
         transactions.forEach {
-            println("07/01/20;${it.beneficiary.rawValue};None;${it.description.rawValue};0;0")
+            println("${it.date};${it.beneficiary.rawValue};None;${it.description.rawValue};0;0")
         }
     }
 }
