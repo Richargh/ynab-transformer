@@ -1,6 +1,7 @@
 package de.richargh.ynabcsvtransformer.domain
 
-import de.richargh.ynabcsvtransformer.input.Category
+import de.richargh.ynabcsvtransformer.input.Beneficiary
+import de.richargh.ynabcsvtransformer.input.Description
 import java.time.LocalDate
 
 data class Transaction(
@@ -10,9 +11,3 @@ data class Transaction(
 //        val debit: Money?,
 //        val credit: Money?
 )
-
-data class Beneficiary(val rawValue: String)
-data class Description(val rawValue: String)
-
-fun beneficiary(rawValue: String) = Beneficiary(rawValue)
-fun description(rawValue: String) = Description(rawValue)

@@ -1,8 +1,6 @@
 package de.richargh.ynabcsvtransformer.input
 
 import de.richargh.ynabcsvtransformer.domain.Transaction
-import de.richargh.ynabcsvtransformer.domain.beneficiary
-import de.richargh.ynabcsvtransformer.domain.description
 import de.richargh.ynabcsvtransformer.input.DomainName.*
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -37,8 +35,8 @@ internal class CsvReaderTest {
         // assert
         assertThat(result).containsExactly(Transaction(
                 LocalDate.of(2020,2,21),
-                beneficiary("John Mopp"),
-                description("Laundry")))
+                Beneficiary("John Mopp"),
+                Description("Laundry")))
     }
 
     @Test
@@ -67,8 +65,8 @@ internal class CsvReaderTest {
         // assert
         assertThat(result).containsExactly(Transaction(
                 LocalDate.of(2020,2,21),
-                beneficiary("John Mopp"),
-                description("Laundry")))
+                Beneficiary("John Mopp"),
+                Description("Laundry")))
     }
 
     @Test
@@ -93,8 +91,8 @@ internal class CsvReaderTest {
         // assert
         assertThat(result).containsExactly(Transaction(
                 LocalDate.of(2020,2,14),
-                beneficiary("ANACONDA EU"),
-                description("111-222222-3333333 Anaconda.de")))
+                Beneficiary("ANACONDA EU"),
+                Description("111-222222-3333333 Anaconda.de")))
     }
 
     @Test
@@ -119,8 +117,8 @@ internal class CsvReaderTest {
         // assert
         assertThat(result).containsExactly(Transaction(
                 LocalDate.of(2020,3,23),
-                beneficiary("Worldline Sweden AB fuer Clamp"),
-                description("""
+                Beneficiary("Worldline Sweden AB fuer Clamp"),
+                Description("""
                     BASISLASTSCHRIFT
                     SHELL 1122/ Frankfurt/DE
                     22.03.2021 um 09:12:34 Uhr""".trimIndent())))

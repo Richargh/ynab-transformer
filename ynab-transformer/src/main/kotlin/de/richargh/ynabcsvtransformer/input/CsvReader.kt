@@ -1,8 +1,6 @@
 package de.richargh.ynabcsvtransformer.input
 
 import de.richargh.ynabcsvtransformer.domain.Transaction
-import de.richargh.ynabcsvtransformer.domain.beneficiary
-import de.richargh.ynabcsvtransformer.domain.description
 import org.apache.commons.csv.CSVFormat
 import org.apache.commons.csv.CSVParser
 import org.apache.commons.csv.CSVRecord
@@ -48,8 +46,8 @@ class CsvReader {
         if(rawBeneficiary.isNullOrBlank())
             return null
 
-        val beneficiary = beneficiary(rawBeneficiary)
-        val description = description(rawDescription)
+        val beneficiary = Beneficiary(rawBeneficiary)
+        val description = Description(rawDescription)
 
         return Transaction(
                 date,
