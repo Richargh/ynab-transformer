@@ -3,7 +3,6 @@ package de.richargh.ynabcsvtransformer.config
 import de.richargh.ynabcsvtransformer.input.*
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import java.time.format.DateTimeFormatter
 
 class CsvConfigTest {
 
@@ -172,45 +171,4 @@ class CsvConfigTest {
         // then
         assertThat(result).isNull()
     }
-
-    private fun configOf(vararg mappings: Mapping) = CsvConfig(
-            anyDatePattern(),
-            anyHeaders(),
-            mappings.asList())
-
-    private fun anyDatePattern() = DateTimeFormatter.ofPattern("MM/dd/uuuu")
-
-    private fun anyHeaders() = CsvHeaders.of(
-            DomainName.BookingDate to "foo1",
-            DomainName.Beneficiary to "foo2",
-            DomainName.Description to "foo3",
-            DomainName.Outflow to "foo4")
-
-    private fun mappingOf(category: String, beneficiary: String, alias: Beneficiary, vararg extraAlias: Beneficiary) =
-            Mapping(
-                Category(category),
-                Beneficiary(beneficiary),
-                Alias(setOf(alias, *extraAlias), emptySet(), emptySet()))
-
-    private fun mappingOf(category: String, beneficiary: String, alias: Description, vararg extraAlias: Description) =
-            Mapping(
-                Category(category),
-                Beneficiary(beneficiary),
-                Alias(emptySet(), setOf(alias, *extraAlias), emptySet()))
-
-    private fun mappingOf(category: String, beneficiary: String, alias: Outflow, vararg aliasOutflow: Outflow) =
-            Mapping(
-                Category(category),
-                Beneficiary(beneficiary),
-                Alias(emptySet(), emptySet(), setOf(alias, *aliasOutflow)))
-
-    private fun mappingOf(category: String, beneficiary: String,
-                          aliasBeneficiary: Beneficiary?, aliasDescription: Description?, aliasOutflow: Outflow?) =
-            Mapping(
-                Category(category),
-                Beneficiary(beneficiary),
-                Alias(
-                        if(aliasBeneficiary != null) setOf(aliasBeneficiary) else emptySet(),
-                        if(aliasDescription != null)setOf(aliasDescription) else emptySet(),
-                        if(aliasOutflow != null) setOf(aliasOutflow) else emptySet()))
 }

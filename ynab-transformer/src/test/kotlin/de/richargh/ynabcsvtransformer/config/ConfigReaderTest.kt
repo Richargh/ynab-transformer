@@ -151,19 +151,4 @@ class ConfigReaderTest {
                 category = "Monthly Bills: Energy", beneficiary = "Powerplant", Outflow("45"))
         )
     }
-
-    private fun mappingOf(category: String, beneficiary: String, aliasBene: Beneficiary) = Mapping(
-            Category(category),
-            Beneficiary(beneficiary),
-            Alias(setOf(aliasBene), emptySet(), emptySet()))
-
-    private fun mappingOf(category: String, beneficiary: String, aliasDesc: Description) = Mapping(
-            Category(category),
-            Beneficiary(beneficiary),
-            Alias(emptySet(), setOf(aliasDesc), emptySet()))
-
-    private fun mappingOf(category: String, beneficiary: String, aliasOutflow: Outflow) = Mapping(
-            Category(category),
-            Beneficiary(beneficiary),
-            Alias(emptySet(), emptySet(), setOf(aliasOutflow)))
 }
