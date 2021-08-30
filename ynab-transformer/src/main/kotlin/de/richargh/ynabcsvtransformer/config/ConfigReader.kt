@@ -4,6 +4,10 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.fasterxml.jackson.module.kotlin.readValue
+import de.richargh.ynabcsvtransformer.domain.Beneficiary
+import de.richargh.ynabcsvtransformer.domain.Category
+import de.richargh.ynabcsvtransformer.domain.Description
+import de.richargh.ynabcsvtransformer.domain.Outflow
 import de.richargh.ynabcsvtransformer.input.*
 import de.richargh.ynabcsvtransformer.result.Res
 import de.richargh.ynabcsvtransformer.result.fail

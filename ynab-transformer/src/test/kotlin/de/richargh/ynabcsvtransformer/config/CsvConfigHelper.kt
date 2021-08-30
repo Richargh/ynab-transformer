@@ -1,6 +1,7 @@
 package de.richargh.ynabcsvtransformer.config
 
 import de.richargh.ynabcsvtransformer.input.*
+import de.richargh.ynabcsvtransformer.domain.*
 import java.time.format.DateTimeFormatter
 
 

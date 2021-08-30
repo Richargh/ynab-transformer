@@ -1,6 +1,6 @@
 package de.richargh.ynabcsvtransformer.input
 
-import de.richargh.ynabcsvtransformer.domain.Transaction
+import de.richargh.ynabcsvtransformer.domain.*
 import org.apache.commons.csv.CSVFormat
 import org.apache.commons.csv.CSVParser
 import org.apache.commons.csv.CSVRecord
@@ -117,9 +117,9 @@ data class Mapping(
 )
 
 data class Alias(
-    val beneficiary: Set<Beneficiary>,
-    val description: Set<Description>,
-    val outflow: Set<Outflow>
+        val beneficiary: Set<Beneficiary>,
+        val description: Set<Description>,
+        val outflow: Set<Outflow>
 )
 
 sealed class DomainName {
@@ -138,25 +138,5 @@ sealed class DomainName {
 }
 
 data class CsvColumn(val rawValue: String){
-    override fun toString() = rawValue
-}
-
-
-data class BookingDate(val rawValue: String){
-    override fun toString() = rawValue
-}
-data class Beneficiary(val rawValue: String){
-    override fun toString() = rawValue
-    fun contains(beneficiary: Beneficiary) = rawValue.contains(beneficiary.rawValue)
-}
-data class Description(val rawValue: String){
-    override fun toString() = rawValue
-    fun contains(description: Description) = rawValue.contains(description.rawValue)
-}
-data class Outflow(val rawValue: String){
-    override fun toString() = rawValue
-}
-
-data class Category(val rawValue: String){
     override fun toString() = rawValue
 }

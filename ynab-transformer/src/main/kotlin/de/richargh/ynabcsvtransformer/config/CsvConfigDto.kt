@@ -1,7 +1,5 @@
 package de.richargh.ynabcsvtransformer.config
 
-import de.richargh.ynabcsvtransformer.input.Outflow
-
 class CsvConfigDto(
         val dateTimePattern: String,
         val header: HeaderConfigDto,
