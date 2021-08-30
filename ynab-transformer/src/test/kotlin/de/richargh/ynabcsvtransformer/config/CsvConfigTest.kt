@@ -40,6 +40,22 @@ class CsvConfigTest {
     }
 
     @Test
+    fun `should find mapping when one of the beneficiary alias matches part of the beneficiary`(){
+        // given
+        val mapping = mappingOf(
+                category = "Monthly Bills: Rent",
+                beneficiary = "Rentmaster",
+                alias = Beneficiary("Steve"), Beneficiary("Master"))
+        val testling = configOf(mapping)
+
+        // when
+        val result = testling.mappingWith(Beneficiary("John Master Smith"), Description("My Rent for the Month"))
+
+        // then
+        assertThat(result).isEqualTo(mapping)
+    }
+
+    @Test
     fun `should not find mapping when single beneficiary alias does not match at all`(){
         // given
         val mapping = mappingOf(
@@ -78,6 +94,24 @@ class CsvConfigTest {
                 category = "Monthly Bills: Rent",
                 beneficiary = "Rentmaster",
                 alias = Description("Rent"))
+        val testling = configOf(mapping)
+
+        // when
+        val result = testling.mappingWith(Beneficiary("John Master Smith"), Description("My Rent for the Month"))
+
+        // then
+        assertThat(result).isEqualTo(mapping)
+    }
+
+
+
+    @Test
+    fun `should find mapping when one of the description alias matches part of the description`(){
+        // given
+        val mapping = mappingOf(
+                category = "Monthly Bills: Rent",
+                beneficiary = "Rentmaster",
+                alias = Description("Mortgage"), Description("Rent"))
         val testling = configOf(mapping)
 
         // when
