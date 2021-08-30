@@ -13,11 +13,27 @@ class CsvConfigTest {
         val mapping = mappingOf(
                 category = "Monthly Bills: Rent",
                 beneficiary = "Rentmaster",
-                alias = Beneficiary("John Master"))
+                alias = Beneficiary("John Master Smith"))
         val testling = configOf(mapping)
 
         // when
-        val result = testling.mappingWith(Beneficiary("John Master"), Description("My Monthly Rent"))
+        val result = testling.mappingWith(Beneficiary("John Master Smith"), Description("My Rent for the Month"))
+
+        // then
+        assertThat(result).isEqualTo(mapping)
+    }
+
+    @Test
+    fun `should find mapping when single beneficiary alias matches part of the beneficiary`(){
+        // given
+        val mapping = mappingOf(
+                category = "Monthly Bills: Rent",
+                beneficiary = "Rentmaster",
+                alias = Beneficiary("Master"))
+        val testling = configOf(mapping)
+
+        // when
+        val result = testling.mappingWith(Beneficiary("John Master Smith"), Description("My Rent for the Month"))
 
         // then
         assertThat(result).isEqualTo(mapping)
@@ -29,11 +45,11 @@ class CsvConfigTest {
         val mapping = mappingOf(
                 category = "Monthly Bills: Rent",
                 beneficiary = "Rentmaster",
-                alias = Beneficiary("John Master"))
+                alias = Beneficiary("John Master Smith"))
         val testling = configOf(mapping)
 
         // when
-        val result = testling.mappingWith(Beneficiary("Jim Close"), Description("My Monthly Rent"))
+        val result = testling.mappingWith(Beneficiary("Jim Close"), Description("My Rent for the Month"))
 
         // then
         assertThat(result).isNull()
@@ -45,11 +61,27 @@ class CsvConfigTest {
         val mapping = mappingOf(
                 category = "Monthly Bills: Rent",
                 beneficiary = "Rentmaster",
-                alias = Description("My Monthly Rent"))
+                alias = Description("My Rent for the Month"))
         val testling = configOf(mapping)
 
         // when
-        val result = testling.mappingWith(Beneficiary("John Master"), Description("My Monthly Rent"))
+        val result = testling.mappingWith(Beneficiary("John Master Smith"), Description("My Rent for the Month"))
+
+        // then
+        assertThat(result).isEqualTo(mapping)
+    }
+
+    @Test
+    fun `should find mapping when single description alias matches part of the description`(){
+        // given
+        val mapping = mappingOf(
+                category = "Monthly Bills: Rent",
+                beneficiary = "Rentmaster",
+                alias = Description("Rent"))
+        val testling = configOf(mapping)
+
+        // when
+        val result = testling.mappingWith(Beneficiary("John Master Smith"), Description("My Rent for the Month"))
 
         // then
         assertThat(result).isEqualTo(mapping)
@@ -61,11 +93,11 @@ class CsvConfigTest {
         val mapping = mappingOf(
                 category = "Monthly Bills: Rent",
                 beneficiary = "Rentmaster",
-                alias = Description("My Monthly Rent"))
+                alias = Description("My Rent for the Month"))
         val testling = configOf(mapping)
 
         // when
-        val result = testling.mappingWith(Beneficiary("John Master"), Description("My Blue Jeans"))
+        val result = testling.mappingWith(Beneficiary("John Master Smith"), Description("My Blue Jeans"))
 
         // then
         assertThat(result).isNull()
@@ -84,18 +116,28 @@ class CsvConfigTest {
             DomainName.Description to "foo3",
             DomainName.Outflow to "foo4")
 
-    private fun mappingOf(category: String, beneficiary: String, alias: Beneficiary) = Mapping(
-            Category(category),
-            Beneficiary(beneficiary),
-            Alias(setOf(alias), emptySet(), emptySet()))
+    private fun mappingOf(category: String, beneficiary: String, alias: Beneficiary, vararg extraAlias: Beneficiary) =
+            Mapping(
+                Category(category),
+                Beneficiary(beneficiary),
+                Alias(setOf(alias, *extraAlias), emptySet(), emptySet()))
 
-    private fun mappingOf(category: String, beneficiary: String, alias: Description) = Mapping(
-            Category(category),
-            Beneficiary(beneficiary),
-            Alias(emptySet(), setOf(alias), emptySet()))
+    private fun mappingOf(category: String, beneficiary: String, alias: Description, vararg extraAlias: Description) =
+            Mapping(
+                Category(category),
+                Beneficiary(beneficiary),
+                Alias(emptySet(), setOf(alias, *extraAlias), emptySet()))
 
-    private fun mappingOf(category: String, beneficiary: String, alias: Outflow) = Mapping(
-            Category(category),
-            Beneficiary(beneficiary),
-            Alias(emptySet(), emptySet(), setOf(alias)))
+    private fun mappingOf(category: String, beneficiary: String, alias: Outflow, vararg aliasOutflow: Outflow) =
+            Mapping(
+                Category(category),
+                Beneficiary(beneficiary),
+                Alias(emptySet(), emptySet(), setOf(alias, *aliasOutflow)))
+
+    private fun mappingOf(category: String, beneficiary: String,
+                          aliasBeneficiary: Beneficiary, aliasDescription: Description, aliasOutflow: Outflow) =
+            Mapping(
+                Category(category),
+                Beneficiary(beneficiary),
+                Alias(setOf(aliasBeneficiary), setOf(aliasDescription), setOf(aliasOutflow)))
 }

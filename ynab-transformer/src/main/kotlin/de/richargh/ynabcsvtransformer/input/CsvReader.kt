@@ -79,9 +79,9 @@ class CsvConfig(
         val mappings: List<Mapping>
 ) {
     fun mappingWith(beneficiary: Beneficiary, description: Description): Mapping? {
-        return mappings.firstOrNull {
-            (it.alias.beneficiary.isEmpty() || it.alias.beneficiary.contains(beneficiary))
-            && (it.alias.description.isEmpty() || it.alias.description.contains(description))
+        return mappings.firstOrNull { m ->
+            (m.alias.beneficiary.isEmpty() || m.alias.beneficiary.firstOrNull { alias -> beneficiary.contains(alias) } != null)
+            && (m.alias.description.isEmpty() || m.alias.description.firstOrNull { alias -> description.contains(alias) } != null)
         }
     }
 
@@ -143,8 +143,12 @@ data class CsvColumn(val rawValue: String)
 
 
 data class BookingDate(val rawValue: String)
-data class Beneficiary(val rawValue: String)
-data class Description(val rawValue: String)
+data class Beneficiary(val rawValue: String){
+    fun contains(beneficiary: Beneficiary) = rawValue.contains(beneficiary.rawValue)
+}
+data class Description(val rawValue: String){
+    fun contains(description: Description) = rawValue.contains(description.rawValue)
+}
 data class Outflow(val rawValue: String)
 
 data class Category(val rawValue: String)
