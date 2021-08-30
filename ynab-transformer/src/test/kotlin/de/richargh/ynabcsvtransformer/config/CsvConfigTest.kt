@@ -137,6 +137,42 @@ class CsvConfigTest {
         assertThat(result).isNull()
     }
 
+    @Test
+    fun `should only find mapping when both provided beneficiary and description alias match`(){
+        // given
+        val mapping = mappingOf(
+                category = "Monthly Bills: Rent",
+                beneficiary = "Rentmaster",
+                Beneficiary("Master"),
+                Description("Rent"),
+                aliasOutflow = null)
+        val testling = configOf(mapping)
+
+        // when
+        val result = testling.mappingWith(Beneficiary("John Master Smith"), Description("My Rent for the Month"))
+
+        // then
+        assertThat(result).isEqualTo(mapping)
+    }
+
+    @Test
+    fun `should not find mapping when one of the provided beneficiary or description alias do not match`(){
+        // given
+        val mapping = mappingOf(
+                category = "Monthly Bills: Rent",
+                beneficiary = "Rentmaster",
+                Beneficiary("Steve"),
+                Description("Rent"),
+                aliasOutflow = null)
+        val testling = configOf(mapping)
+
+        // when
+        val result = testling.mappingWith(Beneficiary("John Master Smith"), Description("My Blue Jeans"))
+
+        // then
+        assertThat(result).isNull()
+    }
+
     private fun configOf(vararg mappings: Mapping) = CsvConfig(
             anyDatePattern(),
             anyHeaders(),
@@ -169,9 +205,12 @@ class CsvConfigTest {
                 Alias(emptySet(), emptySet(), setOf(alias, *aliasOutflow)))
 
     private fun mappingOf(category: String, beneficiary: String,
-                          aliasBeneficiary: Beneficiary, aliasDescription: Description, aliasOutflow: Outflow) =
+                          aliasBeneficiary: Beneficiary?, aliasDescription: Description?, aliasOutflow: Outflow?) =
             Mapping(
                 Category(category),
                 Beneficiary(beneficiary),
-                Alias(setOf(aliasBeneficiary), setOf(aliasDescription), setOf(aliasOutflow)))
+                Alias(
+                        if(aliasBeneficiary != null) setOf(aliasBeneficiary) else emptySet(),
+                        if(aliasDescription != null)setOf(aliasDescription) else emptySet(),
+                        if(aliasOutflow != null) setOf(aliasOutflow) else emptySet()))
 }
