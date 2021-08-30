@@ -1,5 +1,6 @@
 package de.richargh.ynabcsvtransformer.domain
 
+import de.richargh.ynabcsvtransformer.input.Mapping
 import java.time.LocalDate
 
 data class Transaction(
@@ -8,7 +9,17 @@ data class Transaction(
         val description: Description
 //        val debit: Money?,
 //        val credit: Money?
-)
+) {
+    fun withMapping(mapping: Mapping?): Transaction {
+        if(mapping == null)
+            return this
+
+        return Transaction(
+                date,
+                mapping.beneficiary,
+                description)
+    }
+}
 
 data class BookingDate(val rawValue: String){
     override fun toString() = rawValue

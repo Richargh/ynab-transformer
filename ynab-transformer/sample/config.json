@@ -8,12 +8,11 @@
   },
   "mappings": [
     {
-      "category" : "Monthly Bills: Energy",
-      "beneficiary" : "Franz Ferdinand",
+      "category" : "Entertainment: Gadget",
+      "beneficiary" : "Anaconda",
       "alias": {
-        "beneficiary" : ["Franz Ferdinand"],
-        "description": ["Payment Details"],
-        "outflow": [45]
+        "beneficiary" : ["ANACONDA EU"],
+        "description": ["Notebook"]
       }
     }
   ]
