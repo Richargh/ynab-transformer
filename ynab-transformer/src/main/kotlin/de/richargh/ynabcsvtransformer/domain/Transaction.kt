@@ -1,5 +1,6 @@
 package de.richargh.ynabcsvtransformer.domain
 
+import de.richargh.ynabcsvtransformer.input.Category
 import java.time.LocalDate
 
 data class Transaction(

@@ -72,7 +72,7 @@ class ConfigReaderTest {
 
         // then
         assertThat(result).isInstanceOf(Res.Ok::class.java)
-        assertThat((result as Res.Ok<CsvConfig>).value.mappings).containsOnly(mapping(
+        assertThat((result as Res.Ok<CsvConfig>).value.mappings).containsOnly(mappingOf(
                 category = "Monthly Bills: Energy", beneficiary = "Powerplant", Beneficiary("POWER")))
     }
 
@@ -109,7 +109,7 @@ class ConfigReaderTest {
 
         // then
         assertThat(result).isInstanceOf(Res.Ok::class.java)
-        assertThat((result as Res.Ok<CsvConfig>).value.mappings).containsOnly(mapping(
+        assertThat((result as Res.Ok<CsvConfig>).value.mappings).containsOnly(mappingOf(
                 category = "Monthly Bills: Energy", beneficiary = "Powerplant", Description("Energy for"))
         )
     }
@@ -147,23 +147,23 @@ class ConfigReaderTest {
 
         // then
         assertThat(result).isInstanceOf(Res.Ok::class.java)
-        assertThat((result as Res.Ok<CsvConfig>).value.mappings).containsOnly(mapping(
+        assertThat((result as Res.Ok<CsvConfig>).value.mappings).containsOnly(mappingOf(
                 category = "Monthly Bills: Energy", beneficiary = "Powerplant", Outflow("45"))
         )
     }
 
-    private fun mapping(category: String, beneficiary: String, aliasBene: Beneficiary) = Mapping(
+    private fun mappingOf(category: String, beneficiary: String, aliasBene: Beneficiary) = Mapping(
             Category(category),
             Beneficiary(beneficiary),
-            Alias(listOf(aliasBene), emptyList(), emptyList()))
+            Alias(setOf(aliasBene), emptySet(), emptySet()))
 
-    private fun mapping(category: String, beneficiary: String, aliasDesc: Description) = Mapping(
+    private fun mappingOf(category: String, beneficiary: String, aliasDesc: Description) = Mapping(
             Category(category),
             Beneficiary(beneficiary),
-            Alias(emptyList(), listOf(aliasDesc), emptyList()))
+            Alias(emptySet(), setOf(aliasDesc), emptySet()))
 
-    private fun mapping(category: String, beneficiary: String, aliasOutflow: Outflow) = Mapping(
+    private fun mappingOf(category: String, beneficiary: String, aliasOutflow: Outflow) = Mapping(
             Category(category),
             Beneficiary(beneficiary),
-            Alias(emptyList(), emptyList(), listOf(aliasOutflow)))
+            Alias(emptySet(), emptySet(), setOf(aliasOutflow)))
 }

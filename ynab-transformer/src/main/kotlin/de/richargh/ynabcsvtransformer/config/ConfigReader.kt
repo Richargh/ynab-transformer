@@ -39,8 +39,8 @@ class ConfigReader {
     )
 
     private fun alias(aliasDto: AliasDto) = Alias(
-            aliasDto.beneficiary?.map(::Beneficiary) ?: emptyList(),
-            aliasDto.description?.map(::Description) ?: emptyList(),
-            aliasDto.outflow?.map(::Outflow) ?: emptyList(),
+            aliasDto.beneficiary?.map(::Beneficiary)?.toSet() ?: emptySet(),
+            aliasDto.description?.map(::Description)?.toSet() ?: emptySet(),
+            aliasDto.outflow?.map(::Outflow)?.toSet() ?: emptySet(),
     )
 }

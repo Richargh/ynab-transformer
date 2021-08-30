@@ -31,7 +31,7 @@ class CsvImporter {
 
     private fun tryMap(index: Int, csvRecord: CSVRecord, config: CsvConfig): Transaction? = try {
         when {
-            foundHeader -> mapTransaction(csvRecord, config.dateFormatter)
+            foundHeader -> mapTransaction(csvRecord, config)
             matchColumnHeaders(csvRecord, config.headers) -> null
             else -> null
         }
@@ -39,18 +39,23 @@ class CsvImporter {
         null
     }
 
-    private fun mapTransaction(csvRecord: CSVRecord, dateFormatter: DateTimeFormatter): Transaction? {
+    private fun mapTransaction(csvRecord: CSVRecord, config: CsvConfig): Transaction? {
         val dateString = csvRecord.get(indexOf[DomainName.BookingDate]!!)
-        val date = LocalDate.parse(dateString, dateFormatter)
-        val beneficiary = csvRecord.get(indexOf[DomainName.Beneficiary]!!)
-        val description = csvRecord.get(indexOf[DomainName.Description]!!)
-        if(beneficiary.isNullOrBlank())
+
+        val date = LocalDate.parse(dateString, config.dateFormatter)
+        val rawBeneficiary = csvRecord.get(indexOf[DomainName.Beneficiary]!!)
+        val rawDescription = csvRecord.get(indexOf[DomainName.Description]!!)
+        if(rawBeneficiary.isNullOrBlank())
             return null
+
+        val beneficiary = beneficiary(rawBeneficiary)
+        val description = description(rawDescription)
 
         return Transaction(
                 date,
-                beneficiary(beneficiary),
-                description(description))
+                beneficiary,
+                description
+        )
     }
 
     private fun matchColumnHeaders(csvRecord: CSVRecord, headerMappings: CsvHeaders): Boolean {
@@ -72,7 +77,15 @@ class CsvConfig(
         val dateFormatter: DateTimeFormatter,
         val headers: CsvHeaders,
         val mappings: List<Mapping>
-)
+) {
+    fun mappingWith(beneficiary: Beneficiary, description: Description): Mapping? {
+        return mappings.firstOrNull {
+            (it.alias.beneficiary.isEmpty() || it.alias.beneficiary.contains(beneficiary))
+            && (it.alias.description.isEmpty() || it.alias.description.contains(description))
+        }
+    }
+
+}
 
 class CsvHeaders private constructor(
         val nameOfColumn: Map<CsvColumn, DomainName>) {
@@ -106,9 +119,9 @@ data class Mapping(
 )
 
 data class Alias(
-    val beneficiary: List<Beneficiary>,
-    val description: List<Description>,
-    val outflow: List<Outflow>
+    val beneficiary: Set<Beneficiary>,
+    val description: Set<Description>,
+    val outflow: Set<Outflow>
 )
 
 sealed class DomainName {
