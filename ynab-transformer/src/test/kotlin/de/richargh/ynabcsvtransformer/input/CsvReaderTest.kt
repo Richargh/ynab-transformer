@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-internal class CsvImporterTest {
+internal class CsvReaderTest {
 
     @Test
     fun `should be able to read english singular simple transaction`(){
