@@ -5,5 +5,16 @@
     "beneficiary": "Beneficiary / Originator",
     "description": "Payment Details",
     "outflow": "Debit"
-  }
+  },
+  "mappings": [
+    {
+      "category" : "Monthly Bills: Energy",
+      "beneficiary" : "Franz Ferdinand",
+      "alias": {
+        "beneficiary" : ["Franz Ferdinand"],
+        "description": ["Payment Details"],
+        "outflow": [45]
+      }
+    }
+  ]
 }

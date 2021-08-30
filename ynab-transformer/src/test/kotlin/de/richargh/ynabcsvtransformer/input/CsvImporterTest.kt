@@ -24,7 +24,8 @@ internal class CsvImporterTest {
                 BookingDate to "Buchung",
                 Beneficiary to "Empfänger",
                 Description to "Verwendungszweck",
-                Outflow to "Umsatz"))
+                Outflow to "Umsatz"),
+                emptyList())
         val testling = CsvImporter()
 
         // act
@@ -53,7 +54,8 @@ internal class CsvImporterTest {
                 BookingDate to "Buchung",
                 Beneficiary to "Empfänger",
                 Description to "Verwendungszweck",
-                Outflow to "Umsatz"))
+                Outflow to "Umsatz"),
+                emptyList())
         val testling = CsvImporter()
 
         // act
@@ -78,7 +80,8 @@ internal class CsvImporterTest {
                 BookingDate to "Booking date",
                 Beneficiary to "Beneficiary / Originator",
                 Description to "Payment Details",
-                Outflow to "Debit"))
+                Outflow to "Debit"),
+                emptyList())
         val testling = CsvImporter()
 
         // act
@@ -103,7 +106,8 @@ internal class CsvImporterTest {
                 BookingDate to "Buchungstag",
                 Beneficiary to "Empf�nger/Zahlungspflichtiger",
                 Description to "Vorgang/Verwendungszweck",
-                Outflow to "Umsatz"))
+                Outflow to "Umsatz"),
+                emptyList())
         val testling = CsvImporter()
 
         // act

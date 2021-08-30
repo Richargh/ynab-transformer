@@ -70,7 +70,8 @@ class CsvImporter {
 
 class CsvConfig(
         val dateFormatter: DateTimeFormatter,
-        val headers: CsvHeaders
+        val headers: CsvHeaders,
+        val mappings: List<Mapping>
 )
 
 class CsvHeaders private constructor(
@@ -98,6 +99,18 @@ class CsvHeaders private constructor(
     }
 }
 
+data class Mapping(
+        val category: Category,
+        val beneficiary: Beneficiary,
+        val alias: Alias
+)
+
+data class Alias(
+    val beneficiary: List<Beneficiary>,
+    val description: List<Description>,
+    val outflow: List<Outflow>
+)
+
 sealed class DomainName {
     object BookingDate : DomainName()
     object Beneficiary : DomainName()
@@ -114,3 +127,11 @@ sealed class DomainName {
 }
 
 data class CsvColumn(val rawValue: String)
+
+
+data class BookingDate(val rawValue: String)
+data class Beneficiary(val rawValue: String)
+data class Description(val rawValue: String)
+data class Outflow(val rawValue: String)
+
+data class Category(val rawValue: String)

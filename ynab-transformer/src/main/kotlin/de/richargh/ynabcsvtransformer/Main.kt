@@ -1,18 +1,12 @@
 package de.richargh.ynabcsvtransformer
 
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.KotlinModule
-import com.fasterxml.jackson.module.kotlin.readValue
-import de.richargh.ynabcsvtransformer.config.CsvConfigDto
+import de.richargh.ynabcsvtransformer.config.ConfigReader
 import de.richargh.ynabcsvtransformer.export.YnabCsvExporter
-import de.richargh.ynabcsvtransformer.input.CsvConfig
 import de.richargh.ynabcsvtransformer.input.CsvImporter
-import de.richargh.ynabcsvtransformer.input.CsvHeaders
-import de.richargh.ynabcsvtransformer.input.DomainName
+import de.richargh.ynabcsvtransformer.result.Res
 import picocli.CommandLine
 import picocli.CommandLine.*
 import java.io.File
-import java.time.format.DateTimeFormatter
 import java.util.concurrent.Callable
 import kotlin.system.exitProcess
 
@@ -34,24 +28,20 @@ class Checksum : Callable<Int> {
         if(filesExist != 0)
             return filesExist
 
-        val csvConfig = csvConfig()
+        val configReader = ConfigReader()
         val importer = CsvImporter()
         val exporter = YnabCsvExporter()
-        val results = importer.mapTransactions(csv.inputStream(), csvConfig)
+
+        val csvConfig = configReader.csvConfig(config.inputStream())
+        if(csvConfig is Res.Fail){
+            println("Config is not correct. Problems: ${csvConfig.messages}")
+            return 1
+        }
+
+
+        val results = importer.mapTransactions(csv.inputStream(), (csvConfig as Res.Ok).value)
         exporter.mapTransactions(results)
         return 0
-    }
-
-    private fun csvConfig(): CsvConfig {
-        val mapper = ObjectMapper().registerModule(KotlinModule())
-        val csvConfigDto = mapper.readValue<CsvConfigDto>(config)
-        return CsvConfig(
-                DateTimeFormatter.ofPattern(csvConfigDto.dateTimePattern),
-                CsvHeaders.of(
-                        DomainName.BookingDate to csvConfigDto.header.bookingDate,
-                        DomainName.Beneficiary to csvConfigDto.header.beneficiary,
-                        DomainName.Description to csvConfigDto.header.description,
-                        DomainName.Outflow to csvConfigDto.header.outflow))
     }
 
     private fun ensureFilesExist(): Int {
