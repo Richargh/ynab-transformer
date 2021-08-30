@@ -139,16 +139,26 @@ sealed class DomainName {
     }
 }
 
-data class CsvColumn(val rawValue: String)
+data class CsvColumn(val rawValue: String){
+    override fun toString() = rawValue
+}
 
 
-data class BookingDate(val rawValue: String)
+data class BookingDate(val rawValue: String){
+    override fun toString() = rawValue
+}
 data class Beneficiary(val rawValue: String){
+    override fun toString() = rawValue
     fun contains(beneficiary: Beneficiary) = rawValue.contains(beneficiary.rawValue)
 }
 data class Description(val rawValue: String){
+    override fun toString() = rawValue
     fun contains(description: Description) = rawValue.contains(description.rawValue)
 }
-data class Outflow(val rawValue: String)
+data class Outflow(val rawValue: String){
+    override fun toString() = rawValue
+}
 
-data class Category(val rawValue: String)
+data class Category(val rawValue: String){
+    override fun toString() = rawValue
+}
