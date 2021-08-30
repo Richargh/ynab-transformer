@@ -12,7 +12,7 @@ import java.security.InvalidParameterException
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-class CsvImporter {
+class CsvReader {
 
     private var indexOf: Map<DomainName, Int> = emptyMap()
     private val foundHeader: Boolean get() = indexOf.isNotEmpty()

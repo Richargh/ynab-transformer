@@ -26,7 +26,7 @@ internal class CsvImporterTest {
                 Description to "Verwendungszweck",
                 Outflow to "Umsatz"),
                 emptyList())
-        val testling = CsvImporter()
+        val testling = CsvReader()
 
         // act
         val result = csv.byteInputStream().use {
@@ -56,7 +56,7 @@ internal class CsvImporterTest {
                 Description to "Verwendungszweck",
                 Outflow to "Umsatz"),
                 emptyList())
-        val testling = CsvImporter()
+        val testling = CsvReader()
 
         // act
         val result = csv.byteInputStream().use {
@@ -82,7 +82,7 @@ internal class CsvImporterTest {
                 Description to "Payment Details",
                 Outflow to "Debit"),
                 emptyList())
-        val testling = CsvImporter()
+        val testling = CsvReader()
 
         // act
         val result = javaClass.getResourceAsStream("DB-Transactions-Single1[EN].csv").use {
@@ -108,7 +108,7 @@ internal class CsvImporterTest {
                 Description to "Vorgang/Verwendungszweck",
                 Outflow to "Umsatz"),
                 emptyList())
-        val testling = CsvImporter()
+        val testling = CsvReader()
 
         // act
         val result = javaClass.getResourceAsStream("VR-Transactions-Single1[DE].csv").use {

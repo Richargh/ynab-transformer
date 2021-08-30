@@ -1,8 +1,8 @@
 package de.richargh.ynabcsvtransformer
 
 import de.richargh.ynabcsvtransformer.config.ConfigReader
-import de.richargh.ynabcsvtransformer.export.YnabCsvExporter
-import de.richargh.ynabcsvtransformer.input.CsvImporter
+import de.richargh.ynabcsvtransformer.export.YnabCsvWriter
+import de.richargh.ynabcsvtransformer.input.CsvReader
 import de.richargh.ynabcsvtransformer.result.Res
 import picocli.CommandLine
 import picocli.CommandLine.*
@@ -29,8 +29,8 @@ class Checksum : Callable<Int> {
             return filesExist
 
         val configReader = ConfigReader()
-        val importer = CsvImporter()
-        val exporter = YnabCsvExporter()
+        val importer = CsvReader()
+        val exporter = YnabCsvWriter()
 
         val csvConfig = configReader.csvConfig(config.inputStream())
         if(csvConfig is Res.Fail){

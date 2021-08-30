@@ -2,7 +2,7 @@ package de.richargh.ynabcsvtransformer.export
 
 import de.richargh.ynabcsvtransformer.domain.Transaction
 
-class YnabCsvExporter {
+class YnabCsvWriter {
 
     fun mapTransactions(transactions: Sequence<Transaction>) {
         println("Date;Payee;Category;Memo;Outflow;Inflow")
