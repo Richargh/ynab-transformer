@@ -36,7 +36,8 @@ internal class CsvReaderTest {
         assertThat(result).containsExactly(Transaction(
                 LocalDate.of(2020,2,21),
                 de.richargh.ynabcsvtransformer.domain.Beneficiary("John Mopp"),
-                de.richargh.ynabcsvtransformer.domain.Description("Laundry")))
+                de.richargh.ynabcsvtransformer.domain.Description("Laundry"),
+                null))
     }
 
     @Test
@@ -66,7 +67,8 @@ internal class CsvReaderTest {
         assertThat(result).containsExactly(Transaction(
                 LocalDate.of(2020,2,21),
                 de.richargh.ynabcsvtransformer.domain.Beneficiary("John Mopp"),
-                de.richargh.ynabcsvtransformer.domain.Description("Laundry")))
+                de.richargh.ynabcsvtransformer.domain.Description("Laundry"),
+                null))
     }
 
     @Test
@@ -92,7 +94,8 @@ internal class CsvReaderTest {
         assertThat(result).containsExactly(Transaction(
                 LocalDate.of(2020,2,14),
                 de.richargh.ynabcsvtransformer.domain.Beneficiary("ANACONDA EU"),
-                de.richargh.ynabcsvtransformer.domain.Description("111-222222-3333333 Anaconda.de")))
+                de.richargh.ynabcsvtransformer.domain.Description("111-222222-3333333 Anaconda.de"),
+                null))
     }
 
     @Test
@@ -121,7 +124,8 @@ internal class CsvReaderTest {
                 de.richargh.ynabcsvtransformer.domain.Description("""
                     BASISLASTSCHRIFT
                     SHELL 1122/ Frankfurt/DE
-                    22.03.2021 um 09:12:34 Uhr""".trimIndent())))
+                    22.03.2021 um 09:12:34 Uhr""".trimIndent()),
+                null))
     }
 
 }

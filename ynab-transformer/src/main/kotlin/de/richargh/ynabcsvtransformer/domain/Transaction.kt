@@ -6,7 +6,8 @@ import java.time.LocalDate
 data class Transaction(
         val date: LocalDate,
         val beneficiary: Beneficiary,
-        val description: Description
+        val description: Description,
+        val category: Category?
 //        val debit: Money?,
 //        val credit: Money?
 ) {
@@ -17,7 +18,8 @@ data class Transaction(
         return Transaction(
                 date,
                 mapping.beneficiary,
-                description)
+                description,
+                mapping.category)
     }
 }
 

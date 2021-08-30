@@ -52,7 +52,8 @@ class CsvReader {
         return Transaction(
                 date,
                 beneficiary,
-                description
+                description,
+                null
         )
     }
 

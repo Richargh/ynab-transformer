@@ -7,7 +7,7 @@ class YnabCsvWriter {
     fun mapTransactions(transactions: Sequence<Transaction>) {
         println("Date;Payee;Category;Memo;Outflow;Inflow")
         transactions.forEach {
-            println("${it.date};${it.beneficiary.rawValue};None;${it.description.rawValue};0;0")
+            println("${it.date};${it.beneficiary.rawValue};${it.category?.rawValue ?: ""};${it.description.rawValue};0;0")
         }
     }
 }
