@@ -20,7 +20,11 @@ class ConfigReaderTest {
             "bookingDate": "Booking date",
             "beneficiary": "Beneficiary / Originator",
             "description": "Payment Details",
-            "outflow": "Debit"
+            "flow": {
+                "@type":"InOut",
+                "inFlow": "Credit",
+                "outFlow": "Debit"
+            }
           },
           "mappings": []
         }
@@ -39,7 +43,8 @@ class ConfigReaderTest {
                 .containsEntry(CsvColumn("Booking date"), DomainName.BookingDate)
                 .containsEntry(CsvColumn("Beneficiary / Originator"), DomainName.Beneficiary)
                 .containsEntry(CsvColumn("Payment Details"), DomainName.Description)
-                .containsEntry(CsvColumn("Debit"), DomainName.Outflow)
+                .containsEntry(CsvColumn("Credit"), DomainName.MoneyFlow.InOutFlow.InFlow)
+                .containsEntry(CsvColumn("Debit"), DomainName.MoneyFlow.InOutFlow.OutFlow)
     }
 
     @Test
@@ -52,7 +57,11 @@ class ConfigReaderTest {
             "bookingDate": "Booking date",
             "beneficiary": "Beneficiary / Originator",
             "description": "Payment Details",
-            "outflow": "Debit"
+            "flow": {
+                "@type":"InOut",
+                "inFlow": "Credit",
+                "outFlow": "Debit"
+            }
           },
           "mappings": [
             {
@@ -89,7 +98,11 @@ class ConfigReaderTest {
             "bookingDate": "Booking date",
             "beneficiary": "Beneficiary / Originator",
             "description": "Payment Details",
-            "outflow": "Debit"
+            "flow": {
+                "@type":"InOut",
+                "inFlow": "Credit",
+                "outFlow": "Debit"
+            }
           },
           "mappings": [
             {
@@ -127,7 +140,11 @@ class ConfigReaderTest {
             "bookingDate": "Booking date",
             "beneficiary": "Beneficiary / Originator",
             "description": "Payment Details",
-            "outflow": "Debit"
+            "flow": {
+                "@type":"InOut",
+                "inFlow": "Credit",
+                "outFlow": "Debit"
+            }
           },
           "mappings": [
             {

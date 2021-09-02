@@ -7,10 +7,9 @@ data class Transaction(
         val date: LocalDate,
         val beneficiary: Beneficiary,
         val description: Description,
-        val category: Category?
-//        val debit: Money?,
-//        val credit: Money?
-) {
+        val category: Category?,
+        val outFlow: String,
+        val inFlow: String) {
     fun withMapping(mapping: Mapping?): Transaction {
         if(mapping == null)
             return this
@@ -19,7 +18,9 @@ data class Transaction(
                 date,
                 mapping.beneficiary,
                 description,
-                mapping.category)
+                mapping.category,
+                outFlow,
+                inFlow)
     }
 }
 

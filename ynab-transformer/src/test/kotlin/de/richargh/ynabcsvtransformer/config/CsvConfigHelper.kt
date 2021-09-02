@@ -16,7 +16,8 @@ private fun anyHeaders() = CsvHeaders.of(
         DomainName.BookingDate to "foo1",
         DomainName.Beneficiary to "foo2",
         DomainName.Description to "foo3",
-        DomainName.Outflow to "foo4")
+        DomainName.MoneyFlow.InOutFlow.InFlow to "foo4",
+        DomainName.MoneyFlow.InOutFlow.OutFlow to "foo5")
 
 fun mappingOf(category: String, beneficiary: String, alias: Beneficiary, vararg extraAlias: Beneficiary) =
         Mapping(

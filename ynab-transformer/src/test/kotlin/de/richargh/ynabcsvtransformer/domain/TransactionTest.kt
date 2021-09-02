@@ -12,7 +12,8 @@ class TransactionTest {
     @Test
     fun `should not change the transaction when the mapping is null`(){
         // given
-        val testling = Transaction(anyDate, Beneficiary("Thomas"), Description("lunch sandwich"), null)
+        val testling = Transaction(
+                anyDate, Beneficiary("Thomas"), Description("lunch sandwich"), null, "0", "0")
 
         // when
         val result = testling.withMapping(null)
@@ -28,13 +29,15 @@ class TransactionTest {
                 category = "Food: Restaurant",
                 beneficiary = "Rentmaster",
                 alias = Description("Mortgage"), Description("Rent"))
-        val testling = Transaction(anyDate, Beneficiary("Thomas"), Description("lunch sandwich"), null)
+        val testling = Transaction(
+                anyDate, Beneficiary("Thomas"), Description("lunch sandwich"), null, "0", "0")
 
         // when
         val result = testling.withMapping(mapping)
 
         // then
         assertThat(result).isEqualTo(Transaction(
-                anyDate, Beneficiary("Rentmaster"), Description("lunch sandwich"), Category("Food: Restaurant")))
+                anyDate, Beneficiary("Rentmaster"), Description("lunch sandwich"), Category("Food: Restaurant"),
+                "0", "0"))
     }
 }

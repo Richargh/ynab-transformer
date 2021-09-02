@@ -10,19 +10,20 @@ import java.time.format.DateTimeFormatter
 internal class CsvReaderTest {
 
     @Test
-    fun `should be able to read english singular simple transaction`(){
+    fun `should be able to read german singular simple transaction`(){
         // arrange
         val csv = """
-        "Buchung";"Empfänger";"Verwendungszweck";"Währung";"Umsatz"
-        "21.02.2020";"John Mopp";"Laundry";"EUR";"120"
+        "Buchung";"Empfänger";"Verwendungszweck";"Währung";"Soll";"Haben"
+        "21.02.2020";"John Mopp";"Laundry";"EUR";"120";"0"
         """.trimIndent()
         val csvConfig = CsvConfig(
                 DateTimeFormatter.ofPattern("dd.MM.uuuu"),
                 CsvHeaders.of(
-                BookingDate to "Buchung",
-                Beneficiary to "Empfänger",
-                Description to "Verwendungszweck",
-                Outflow to "Umsatz"),
+                    BookingDate to "Buchung",
+                    Beneficiary to "Empfänger",
+                    Description to "Verwendungszweck",
+                    MoneyFlow.InOutFlow.OutFlow to "Soll",
+                    MoneyFlow.InOutFlow.InFlow to "Haben"),
                 emptyList())
         val testling = CsvReader()
 
@@ -37,15 +38,17 @@ internal class CsvReaderTest {
                 LocalDate.of(2020,2,21),
                 de.richargh.ynabcsvtransformer.domain.Beneficiary("John Mopp"),
                 de.richargh.ynabcsvtransformer.domain.Description("Laundry"),
-                null))
+                null,
+                "120",
+                "0"))
     }
 
     @Test
-    fun `should be able to read english singular simple multi-line transaction`(){
+    fun `should be able to read german singular simple multi-line transaction`(){
         // arrange
         val csv = """
-        "Buchung";"Empfänger";"Verwendungszweck";"Währung";"Umsatz"
-        "21.02.2020";"John Mopp";"Laundry";"EUR";"120"
+        "Buchung";"Empfänger";"Verwendungszweck";"Währung";"Soll";"Haben"
+        "21.02.2020";"John Mopp";"Laundry";"EUR";"120";"0"
         """.trimIndent()
         val csvConfig = CsvConfig(
                 DateTimeFormatter.ofPattern("dd.MM.uuuu"),
@@ -53,7 +56,8 @@ internal class CsvReaderTest {
                 BookingDate to "Buchung",
                 Beneficiary to "Empfänger",
                 Description to "Verwendungszweck",
-                Outflow to "Umsatz"),
+                MoneyFlow.InOutFlow.OutFlow to "Soll",
+                MoneyFlow.InOutFlow.InFlow to "Haben"),
                 emptyList())
         val testling = CsvReader()
 
@@ -68,7 +72,9 @@ internal class CsvReaderTest {
                 LocalDate.of(2020,2,21),
                 de.richargh.ynabcsvtransformer.domain.Beneficiary("John Mopp"),
                 de.richargh.ynabcsvtransformer.domain.Description("Laundry"),
-                null))
+                null,
+                "120",
+                "0"))
     }
 
     @Test
@@ -80,7 +86,8 @@ internal class CsvReaderTest {
                 BookingDate to "Booking date",
                 Beneficiary to "Beneficiary / Originator",
                 Description to "Payment Details",
-                Outflow to "Debit"),
+                MoneyFlow.InOutFlow.OutFlow to "Debit",
+                MoneyFlow.InOutFlow.InFlow to "Credit"),
                 emptyList())
         val testling = CsvReader()
 
@@ -95,7 +102,9 @@ internal class CsvReaderTest {
                 LocalDate.of(2020,2,14),
                 de.richargh.ynabcsvtransformer.domain.Beneficiary("ANACONDA EU"),
                 de.richargh.ynabcsvtransformer.domain.Description("111-222222-3333333 Anaconda.de"),
-                null))
+                null,
+                "-150.12",
+                ""))
     }
 
     @Test
@@ -107,7 +116,8 @@ internal class CsvReaderTest {
                 BookingDate to "Buchungstag",
                 Beneficiary to "Empf�nger/Zahlungspflichtiger",
                 Description to "Vorgang/Verwendungszweck",
-                Outflow to "Umsatz"),
+                MoneyFlow.InOutFlow.OutFlow to "Umsatz",
+                MoneyFlow.InOutFlow.InFlow to "W�hrung"),
                 emptyList())
         val testling = CsvReader()
 
@@ -125,7 +135,9 @@ internal class CsvReaderTest {
                     BASISLASTSCHRIFT
                     SHELL 1122/ Frankfurt/DE
                     22.03.2021 um 09:12:34 Uhr""".trimIndent()),
-                null))
+                null,
+                "33,33",
+                "EUR"))
     }
 
 }

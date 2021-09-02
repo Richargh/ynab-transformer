@@ -43,6 +43,15 @@ class CsvReader {
         val date = LocalDate.parse(dateString, config.dateFormatter)
         val rawBeneficiary = csvRecord.get(indexOf[DomainName.Beneficiary]!!)
         val rawDescription = csvRecord.get(indexOf[DomainName.Description]!!)
+
+        val (inFlow, outFlow) = if(indexOf.containsKey(DomainName.MoneyFlow.InOutFlow.InFlow)){
+            Pair(
+                    csvRecord.get(indexOf[DomainName.MoneyFlow.InOutFlow.InFlow]!!),
+                    csvRecord.get(indexOf[DomainName.MoneyFlow.InOutFlow.OutFlow]!!))
+        } else {
+            Pair("", "")
+        }
+
         if(rawBeneficiary.isNullOrBlank())
             return null
 
@@ -53,7 +62,9 @@ class CsvReader {
                 date,
                 beneficiary,
                 description,
-                null
+                null,
+                outFlow,
+                inFlow
         )
     }
 
@@ -127,7 +138,13 @@ sealed class DomainName {
     object BookingDate : DomainName()
     object Beneficiary : DomainName()
     object Description : DomainName()
-    object Outflow : DomainName()
+    sealed class MoneyFlow : DomainName() {
+        sealed class InOutFlow: MoneyFlow() {
+            object InFlow: InOutFlow()
+            object OutFlow: InOutFlow()
+        }
+    }
+
 
     companion object {
         val objects get() = DomainName::class.sealedSubclasses.mapNotNull { it.objectInstance }.toSet()

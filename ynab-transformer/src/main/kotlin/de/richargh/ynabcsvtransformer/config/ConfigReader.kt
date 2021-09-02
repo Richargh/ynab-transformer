@@ -26,13 +26,19 @@ class ConfigReader {
             return fail(e.message!!)
         }
 
+        val moneyFlow = when(csvConfigDto.header.flow){
+            is InOutFlowDto -> arrayOf(
+                    DomainName.MoneyFlow.InOutFlow.InFlow to csvConfigDto.header.flow.inFlow,
+                    DomainName.MoneyFlow.InOutFlow.OutFlow to csvConfigDto.header.flow.outFlow)
+        }
+
         return ok(CsvConfig(
                 DateTimeFormatter.ofPattern(csvConfigDto.dateTimePattern),
                 CsvHeaders.of(
                         DomainName.BookingDate to csvConfigDto.header.bookingDate,
                         DomainName.Beneficiary to csvConfigDto.header.beneficiary,
                         DomainName.Description to csvConfigDto.header.description,
-                        DomainName.Outflow to csvConfigDto.header.outflow),
+                        *moneyFlow),
                 csvConfigDto.mappings.map(::mapping)))
     }
 

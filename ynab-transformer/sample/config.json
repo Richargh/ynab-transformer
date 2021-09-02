@@ -4,7 +4,11 @@
     "bookingDate": "Booking date",
     "beneficiary": "Beneficiary / Originator",
     "description": "Payment Details",
-    "outflow": "Debit"
+    "flow": {
+      "@type":"InOut",
+      "inFlow": "Credit",
+      "outFlow": "Debit"
+    }
   },
   "mappings": [
     {
