@@ -9,6 +9,7 @@ import java.io.InputStreamReader
 import java.security.InvalidParameterException
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import kotlin.math.abs
 
 class CsvReader {
 
@@ -48,6 +49,14 @@ class CsvReader {
             Pair(
                     csvRecord.get(indexOf[DomainName.MoneyFlow.InOutFlow.InFlow]!!),
                     csvRecord.get(indexOf[DomainName.MoneyFlow.InOutFlow.OutFlow]!!))
+        } else if(indexOf.containsKey(DomainName.MoneyFlow.PlusMinusFlow.Flow)){
+            val flow = csvRecord.get(indexOf[DomainName.MoneyFlow.PlusMinusFlow.Flow]!!).toIntOrNull()
+            if(flow == null)
+                Pair("", "")
+            else
+                Pair(
+                    if(flow < 0) "0" else "$flow",
+                    if(flow < 0) "${abs(flow)}" else "0")
         } else {
             Pair("", "")
         }

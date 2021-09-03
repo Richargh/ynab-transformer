@@ -10,11 +10,11 @@ import java.time.format.DateTimeFormatter
 internal class CsvReaderTest {
 
     @Test
-    fun `should be able to read german singular simple transaction`(){
+    fun `should be able to read singular german plusminus OutFlow transaction`(){
         // arrange
         val csv = """
-        "Buchung";"Empfänger";"Verwendungszweck";"Währung";"Soll";"Haben"
-        "21.02.2020";"John Mopp";"Laundry";"EUR";"120";"0"
+        "Buchung";"Empfänger";"Verwendungszweck";"Währung";"Umsatz"
+        "21.02.2020";"John Mopp";"Laundry";"EUR";"-120"
         """.trimIndent()
         val csvConfig = CsvConfig(
                 DateTimeFormatter.ofPattern("dd.MM.uuuu"),
@@ -22,8 +22,7 @@ internal class CsvReaderTest {
                     BookingDate to "Buchung",
                     Beneficiary to "Empfänger",
                     Description to "Verwendungszweck",
-                    MoneyFlow.InOutFlow.OutFlow to "Soll",
-                    MoneyFlow.InOutFlow.InFlow to "Haben"),
+                    MoneyFlow.PlusMinusFlow.Flow to "Umsatz"),
                 emptyList())
         val testling = CsvReader()
 
@@ -44,7 +43,40 @@ internal class CsvReaderTest {
     }
 
     @Test
-    fun `should be able to read german singular simple multi-line transaction`(){
+    fun `should be able to read singular german plusminus InFlow transaction`(){
+        // arrange
+        val csv = """
+        "Buchung";"Empfänger";"Verwendungszweck";"Währung";"Umsatz"
+        "21.02.2020";"John Mopp";"Laundry";"EUR";"120"
+        """.trimIndent()
+        val csvConfig = CsvConfig(
+                DateTimeFormatter.ofPattern("dd.MM.uuuu"),
+                CsvHeaders.of(
+                        BookingDate to "Buchung",
+                        Beneficiary to "Empfänger",
+                        Description to "Verwendungszweck",
+                        MoneyFlow.PlusMinusFlow.Flow to "Umsatz"),
+                emptyList())
+        val testling = CsvReader()
+
+        // act
+        val result = csv.byteInputStream().use {
+            // act
+            testling.mapTransactions(it, csvConfig).toList()
+        }
+
+        // assert
+        assertThat(result).containsExactly(Transaction(
+                LocalDate.of(2020,2,21),
+                de.richargh.ynabcsvtransformer.domain.Beneficiary("John Mopp"),
+                de.richargh.ynabcsvtransformer.domain.Description("Laundry"),
+                null,
+                "0",
+                "120"))
+    }
+
+    @Test
+    fun `should be able to read singular german inout flow transaction`(){
         // arrange
         val csv = """
         "Buchung";"Empfänger";"Verwendungszweck";"Währung";"Soll";"Haben"
@@ -53,11 +85,11 @@ internal class CsvReaderTest {
         val csvConfig = CsvConfig(
                 DateTimeFormatter.ofPattern("dd.MM.uuuu"),
                 CsvHeaders.of(
-                BookingDate to "Buchung",
-                Beneficiary to "Empfänger",
-                Description to "Verwendungszweck",
-                MoneyFlow.InOutFlow.OutFlow to "Soll",
-                MoneyFlow.InOutFlow.InFlow to "Haben"),
+                        BookingDate to "Buchung",
+                        Beneficiary to "Empfänger",
+                        Description to "Verwendungszweck",
+                        MoneyFlow.InOutFlow.OutFlow to "Soll",
+                        MoneyFlow.InOutFlow.InFlow to "Haben"),
                 emptyList())
         val testling = CsvReader()
 
