@@ -83,6 +83,48 @@ class ConfigReaderTest {
     }
 
     @Test
+    fun `should be able to read minimal config with Marker Flow`(){
+        // given
+        val config = """
+        {
+          "dateTimePattern": "MM/dd/uuuu",
+          "header": {
+            "bookingDate": "Booking date",
+            "beneficiary": "Beneficiary / Originator",
+            "description": "Payment Details",
+            "flow": {
+                "@type":"Marker",
+                "flow": "Sales",
+                "marker": " ",
+                "markerInFlow": "H",
+                "markerOutFlow": "S"
+            }
+          },
+          "mappings": []
+        }
+        """.trimIndent()
+        val testling = ConfigReader()
+
+        // when
+        val result = config.byteInputStream().use {
+            // act
+            testling.csvConfig(it)
+        }
+
+        // then
+        assertThat(result).isInstanceOf(Res.Ok::class.java)
+        assertThat((result as Res.Ok<CsvConfig>).value.headers.nameOfColumn)
+                .containsEntry(CsvColumn("Booking date"), DomainName.BookingDate)
+                .containsEntry(CsvColumn("Beneficiary / Originator"), DomainName.Beneficiary)
+                .containsEntry(CsvColumn("Payment Details"), DomainName.Description)
+                .containsEntry(CsvColumn("Sales"), DomainName.MoneyFlow.MarkerFlow.Flow)
+                .containsEntry(CsvColumn(" "), DomainName.MoneyFlow.MarkerFlow.Marker.any())
+        val marker = result.value.headers.nameOfColumn[CsvColumn(" ")] as DomainName.MoneyFlow.MarkerFlow.Marker
+        assertThat(marker.inFlowMarker).isEqualTo("H")
+        assertThat(marker.outFlowMarker).isEqualTo("S")
+    }
+
+    @Test
     fun `should be able to read beneficiary mapping`(){
         // given
         val config = """

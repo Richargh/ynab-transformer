@@ -157,6 +157,24 @@ sealed class DomainName {
             object InFlow: InOutFlow()
             object OutFlow: InOutFlow()
         }
+        sealed class MarkerFlow: MoneyFlow() {
+            object Flow: MarkerFlow()
+            class Marker(
+                    val inFlowMarker: String,
+                    val outFlowMarker: String): MarkerFlow(){
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) return true
+                    return javaClass == other?.javaClass
+                }
+
+                override fun hashCode() = javaClass.hashCode()
+
+                companion object {
+                    fun any() = Marker("", "")
+                }
+            }
+        }
     }
 
 

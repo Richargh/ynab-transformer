@@ -32,6 +32,11 @@ class ConfigReader {
             is InOutFlowDto -> arrayOf(
                     DomainName.MoneyFlow.InOutFlow.InFlow to csvConfigDto.header.flow.inFlow,
                     DomainName.MoneyFlow.InOutFlow.OutFlow to csvConfigDto.header.flow.outFlow)
+            is MarkerFlowDto -> arrayOf(
+                    DomainName.MoneyFlow.MarkerFlow.Flow to csvConfigDto.header.flow.flow,
+                    DomainName.MoneyFlow.MarkerFlow.Marker(
+                        inFlowMarker = csvConfigDto.header.flow.markerInFlow,
+                        outFlowMarker = csvConfigDto.header.flow.markerOutFlow) to csvConfigDto.header.flow.marker)
         }
 
         return ok(CsvConfig(

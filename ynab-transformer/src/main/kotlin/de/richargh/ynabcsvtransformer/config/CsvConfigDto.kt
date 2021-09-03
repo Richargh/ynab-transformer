@@ -19,7 +19,8 @@ class HeaderConfigDto(
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type")
 @JsonSubTypes(
         JsonSubTypes.Type(value = PlusMinusFlowDto::class, name = "PlusMinus"),
-        JsonSubTypes.Type(value = InOutFlowDto::class, name = "InOut"))
+        JsonSubTypes.Type(value = InOutFlowDto::class, name = "InOut"),
+        JsonSubTypes.Type(value = MarkerFlowDto::class, name = "Marker"))
 sealed class FlowDto
 
 /**
@@ -42,8 +43,8 @@ class InOutFlowDto(
 class MarkerFlowDto(
         val flow: String,
         val marker: String,
-        val markerIn: String,
-        val markerOut: String)
+        val markerInFlow: String,
+        val markerOutFlow: String): FlowDto()
 
 class MappingDto(
         val category: String,
