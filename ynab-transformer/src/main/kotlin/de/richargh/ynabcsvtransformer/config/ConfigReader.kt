@@ -27,6 +27,8 @@ class ConfigReader {
         }
 
         val moneyFlow = when(csvConfigDto.header.flow){
+            is PlusMinusFlowDto -> arrayOf(
+                    DomainName.MoneyFlow.PlusMinusFlow.Flow to csvConfigDto.header.flow.flow)
             is InOutFlowDto -> arrayOf(
                     DomainName.MoneyFlow.InOutFlow.InFlow to csvConfigDto.header.flow.inFlow,
                     DomainName.MoneyFlow.InOutFlow.OutFlow to csvConfigDto.header.flow.outFlow)

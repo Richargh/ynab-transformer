@@ -135,10 +135,15 @@ data class Alias(
 )
 
 sealed class DomainName {
+    override fun toString(): String = javaClass.simpleName
+
     object BookingDate : DomainName()
     object Beneficiary : DomainName()
     object Description : DomainName()
     sealed class MoneyFlow : DomainName() {
+        sealed class PlusMinusFlow: MoneyFlow() {
+            object Flow: PlusMinusFlow()
+        }
         sealed class InOutFlow: MoneyFlow() {
             object InFlow: InOutFlow()
             object OutFlow: InOutFlow()

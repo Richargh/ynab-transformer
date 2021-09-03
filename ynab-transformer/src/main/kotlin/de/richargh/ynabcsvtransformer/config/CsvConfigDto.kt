@@ -18,7 +18,7 @@ class HeaderConfigDto(
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type")
 @JsonSubTypes(
-//        JsonSubTypes.Type(value = PlusMinusFlowDto::class, name = "PlusMinus"),
+        JsonSubTypes.Type(value = PlusMinusFlowDto::class, name = "PlusMinus"),
         JsonSubTypes.Type(value = InOutFlowDto::class, name = "InOut"))
 sealed class FlowDto
 
@@ -26,7 +26,7 @@ sealed class FlowDto
  * For something where the money is in one column and the +/- before the number declares it as in our out-flow.
  */
 class PlusMinusFlowDto(
-        val flow: String)
+        val flow: String): FlowDto()
 
 /**
  * For something where the in-flow is in one column and the out-flow is in another column.

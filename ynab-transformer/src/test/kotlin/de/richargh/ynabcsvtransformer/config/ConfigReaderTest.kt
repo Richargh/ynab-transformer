@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test
 class ConfigReaderTest {
 
     @Test
-    fun `should be able to read minimal config`(){
+    fun `should be able to read minimal config with InOut Flow`(){
         // given
         val config = """
         {
@@ -45,6 +45,41 @@ class ConfigReaderTest {
                 .containsEntry(CsvColumn("Payment Details"), DomainName.Description)
                 .containsEntry(CsvColumn("Credit"), DomainName.MoneyFlow.InOutFlow.InFlow)
                 .containsEntry(CsvColumn("Debit"), DomainName.MoneyFlow.InOutFlow.OutFlow)
+    }
+
+    @Test
+    fun `should be able to read minimal config with PlusMinus Flow`(){
+        // given
+        val config = """
+        {
+          "dateTimePattern": "MM/dd/uuuu",
+          "header": {
+            "bookingDate": "Booking date",
+            "beneficiary": "Beneficiary / Originator",
+            "description": "Payment Details",
+            "flow": {
+                "@type":"PlusMinus",
+                "flow": "Sales"
+            }
+          },
+          "mappings": []
+        }
+        """.trimIndent()
+        val testling = ConfigReader()
+
+        // when
+        val result = config.byteInputStream().use {
+            // act
+            testling.csvConfig(it)
+        }
+
+        // then
+        assertThat(result).isInstanceOf(Res.Ok::class.java)
+        assertThat((result as Res.Ok<CsvConfig>).value.headers.nameOfColumn)
+                .containsEntry(CsvColumn("Booking date"), DomainName.BookingDate)
+                .containsEntry(CsvColumn("Beneficiary / Originator"), DomainName.Beneficiary)
+                .containsEntry(CsvColumn("Payment Details"), DomainName.Description)
+                .containsEntry(CsvColumn("Sales"), DomainName.MoneyFlow.PlusMinusFlow.Flow)
     }
 
     @Test
