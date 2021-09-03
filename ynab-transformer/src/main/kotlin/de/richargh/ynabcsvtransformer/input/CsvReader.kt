@@ -57,6 +57,19 @@ class CsvReader {
                 Pair(
                     if(flow < 0) "0" else "$flow",
                     if(flow < 0) "${abs(flow)}" else "0")
+        }  else if(indexOf.containsKey(DomainName.MoneyFlow.MarkerFlow.Flow)){
+            val flow = csvRecord.get(indexOf[DomainName.MoneyFlow.MarkerFlow.Flow]!!).toIntOrNull()
+            // FIXME this line is slow because it is repeated so often.
+            //  Is there some way to get both key and value from a hashmap directly?
+            val m = indexOf.keys.first { it == DomainName.MoneyFlow.MarkerFlow.Marker.any() } as DomainName.MoneyFlow.MarkerFlow.Marker
+            val marker = csvRecord.get(indexOf[m]!!).trim()
+
+            if(flow == null)
+                Pair("", "")
+            else
+                Pair(
+                        if(marker == m.inFlowMarker) "$flow" else "0",
+                        if(marker == m.outFlowMarker) "$flow" else "0")
         } else {
             Pair("", "")
         }

@@ -110,6 +110,74 @@ internal class CsvReaderTest {
     }
 
     @Test
+    fun `should be able to read singular german marker OutFlow transaction`(){
+        // arrange
+        val csv = """
+        "Buchung";"Empfänger";"Verwendungszweck";"Währung";"Umsatz";" "
+        "21.02.2020";"John Mopp";"Laundry";"EUR";"120";"S"
+        """.trimIndent()
+        val csvConfig = CsvConfig(
+                DateTimeFormatter.ofPattern("dd.MM.uuuu"),
+                CsvHeaders.of(
+                        BookingDate to "Buchung",
+                        Beneficiary to "Empfänger",
+                        Description to "Verwendungszweck",
+                        MoneyFlow.MarkerFlow.Flow to "Umsatz",
+                        MoneyFlow.MarkerFlow.Marker("H", "S") to " "),
+                emptyList())
+        val testling = CsvReader()
+
+        // act
+        val result = csv.byteInputStream().use {
+            // act
+            testling.mapTransactions(it, csvConfig).toList()
+        }
+
+        // assert
+        assertThat(result).containsExactly(Transaction(
+                LocalDate.of(2020,2,21),
+                de.richargh.ynabcsvtransformer.domain.Beneficiary("John Mopp"),
+                de.richargh.ynabcsvtransformer.domain.Description("Laundry"),
+                null,
+                "120",
+                "0"))
+    }
+
+    @Test
+    fun `should be able to read singular german marker InFlow transaction`(){
+        // arrange
+        val csv = """
+        "Buchung";"Empfänger";"Verwendungszweck";"Währung";"Umsatz";" "
+        "21.02.2020";"John Mopp";"Laundry";"EUR";"120";"H"
+        """.trimIndent()
+        val csvConfig = CsvConfig(
+                DateTimeFormatter.ofPattern("dd.MM.uuuu"),
+                CsvHeaders.of(
+                        BookingDate to "Buchung",
+                        Beneficiary to "Empfänger",
+                        Description to "Verwendungszweck",
+                        MoneyFlow.MarkerFlow.Flow to "Umsatz",
+                        MoneyFlow.MarkerFlow.Marker("H", "S") to " "),
+                emptyList())
+        val testling = CsvReader()
+
+        // act
+        val result = csv.byteInputStream().use {
+            // act
+            testling.mapTransactions(it, csvConfig).toList()
+        }
+
+        // assert
+        assertThat(result).containsExactly(Transaction(
+                LocalDate.of(2020,2,21),
+                de.richargh.ynabcsvtransformer.domain.Beneficiary("John Mopp"),
+                de.richargh.ynabcsvtransformer.domain.Description("Laundry"),
+                null,
+                "0",
+                "120"))
+    }
+
+    @Test
     fun `should be able to read english singular DB transaction`(){
         // arrange
         val csvConfig = CsvConfig(
