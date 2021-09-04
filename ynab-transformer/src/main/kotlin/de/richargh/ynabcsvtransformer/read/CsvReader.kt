@@ -7,6 +7,7 @@ import org.apache.commons.csv.CSVRecord
 import java.io.InputStream
 import java.io.InputStreamReader
 import java.time.LocalDate
+import java.time.format.DateTimeParseException
 import kotlin.math.abs
 
 class CsvReader {
@@ -37,11 +38,18 @@ class CsvReader {
     }
 
     private fun mapTransaction(csvRecord: CSVRecord, config: CsvConfig): Transaction? {
-        val dateString = csvRecord.get(indexOf[DomainName.BookingDate]!!)
-
-        val date = LocalDate.parse(dateString, config.read.dateFormatter)
         val rawBeneficiary = csvRecord.get(indexOf[DomainName.Beneficiary]!!)
         val rawDescription = csvRecord.get(indexOf[DomainName.Description]!!)
+        if(rawBeneficiary.isNullOrBlank())
+            return null
+
+        val dateString = csvRecord.get(indexOf[DomainName.BookingDate]!!)
+        val date = try {
+            LocalDate.parse(dateString, config.read.dateFormatter)
+        } catch (ex: DateTimeParseException){
+            System.err.println("Could not parse $dateString. Is the pattern correct?")
+            throw ex
+        }
 
         val (inFlow, outFlow) = if(indexOf.containsKey(DomainName.MoneyFlow.InOutFlow.InFlow)){
             Pair(
@@ -72,9 +80,6 @@ class CsvReader {
             Pair("", "")
         }
 
-        if(rawBeneficiary.isNullOrBlank())
-            return null
-
         val beneficiary = Beneficiary(rawBeneficiary)
         val description = Description(rawDescription)
 
@@ -89,12 +94,15 @@ class CsvReader {
     }
 
     private fun matchColumnHeaders(csvRecord: CSVRecord, headerMappings: CsvHeaders): Boolean {
-        val indexOfMappableColumn = csvRecord.asSequence()
+        val indexOfMappableColumn: Map<DomainName, Int> = csvRecord.asSequence()
                 .mapIndexed { index, value -> CsvColumn(value) to index }
                 .filter { (column, index) -> column in headerMappings }
                 .map { (column, index) -> headerMappings[column] to index }
                 .toMap()
-
+        if(0 < indexOfMappableColumn.size && indexOfMappableColumn.size < headerMappings.size){
+            val missing = headerMappings.nameOfColumn.values - indexOfMappableColumn.keys
+            System.err.println("Could not find columns for: $missing")
+        }
         val foundHeaders = indexOfMappableColumn.size == headerMappings.size
         if(foundHeaders)
             this.indexOf = indexOfMappableColumn
