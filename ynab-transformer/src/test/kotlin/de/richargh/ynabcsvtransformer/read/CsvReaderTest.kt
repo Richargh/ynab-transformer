@@ -6,6 +6,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import java.util.*
 
 internal class CsvReaderTest {
 
@@ -16,24 +17,20 @@ internal class CsvReaderTest {
         "Buchung";"Empfänger";"Verwendungszweck";"Währung";"Umsatz"
         "21.02.2020";"John Mopp";"Laundry";"EUR";"-120"
         """.trimIndent()
-        val csvConfig = CsvConfig(
-                ReadConfig(
-                    DateTimeFormatter.ofPattern("dd.MM.uuuu"),
-                    ';',
-                    CsvHeaders.of(
-                        BookingDate to "Buchung",
-                        Beneficiary to "Empfänger",
-                        Description to "Verwendungszweck",
-                        MoneyFlow.PlusMinusFlow.Flow to "Umsatz")),
-                WriteConfig(
-                    ';'
-                ),
-                Mappings(emptyList()))
+        val readConfig = ReadConfig(
+            DateTimeFormatter.ofPattern("dd.MM.uuuu"),
+            ';',
+            Locale.GERMANY,
+            CsvHeaders.of(
+                BookingDate to "Buchung",
+                Beneficiary to "Empfänger",
+                Description to "Verwendungszweck",
+                MoneyFlow.PlusMinusFlow.Flow to "Umsatz"))
         val testling = CsvReader()
 
         // when
         val result = csv.byteInputStream().use {
-            testling.mapTransactions(it, csvConfig).toList()
+            testling.mapTransactions(it, readConfig).toList()
         }
 
         // then
@@ -53,24 +50,20 @@ internal class CsvReaderTest {
         "Buchung";"Empfänger";"Verwendungszweck";"Währung";"Umsatz"
         "21.02.2020";"John Mopp";"Laundry";"EUR";"120"
         """.trimIndent()
-        val csvConfig = CsvConfig(
-                ReadConfig(
-                    DateTimeFormatter.ofPattern("dd.MM.uuuu"),
-                    ';',
-                    CsvHeaders.of(
-                            BookingDate to "Buchung",
-                            Beneficiary to "Empfänger",
-                            Description to "Verwendungszweck",
-                            MoneyFlow.PlusMinusFlow.Flow to "Umsatz")),
-                WriteConfig(
-                    ';'
-                ),
-                Mappings(emptyList()))
+        val readConfig = ReadConfig(
+            DateTimeFormatter.ofPattern("dd.MM.uuuu"),
+            ';',
+            Locale.GERMANY,
+            CsvHeaders.of(
+                    BookingDate to "Buchung",
+                    Beneficiary to "Empfänger",
+                    Description to "Verwendungszweck",
+                    MoneyFlow.PlusMinusFlow.Flow to "Umsatz"))
         val testling = CsvReader()
 
         // when
         val result = csv.byteInputStream().use {
-            testling.mapTransactions(it, csvConfig).toList()
+            testling.mapTransactions(it, readConfig).toList()
         }
 
         // then
@@ -90,25 +83,21 @@ internal class CsvReaderTest {
         "Buchung";"Empfänger";"Verwendungszweck";"Währung";"Soll";"Haben"
         "21.02.2020";"John Mopp";"Laundry";"EUR";"120";"0"
         """.trimIndent()
-        val csvConfig = CsvConfig(
-                ReadConfig(
-                    DateTimeFormatter.ofPattern("dd.MM.uuuu"),
-                    ';',
-                    CsvHeaders.of(
-                            BookingDate to "Buchung",
-                            Beneficiary to "Empfänger",
-                            Description to "Verwendungszweck",
-                            MoneyFlow.InOutFlow.OutFlow to "Soll",
-                            MoneyFlow.InOutFlow.InFlow to "Haben")),
-                WriteConfig(
-                    ';'
-                ),
-                Mappings(emptyList()))
+        val readConfig = ReadConfig(
+            DateTimeFormatter.ofPattern("dd.MM.uuuu"),
+            ';',
+            Locale.GERMANY,
+            CsvHeaders.of(
+                    BookingDate to "Buchung",
+                    Beneficiary to "Empfänger",
+                    Description to "Verwendungszweck",
+                    MoneyFlow.InOutFlow.OutFlow to "Soll",
+                    MoneyFlow.InOutFlow.InFlow to "Haben"))
         val testling = CsvReader()
 
         // when
         val result = csv.byteInputStream().use {
-            testling.mapTransactions(it, csvConfig).toList()
+            testling.mapTransactions(it, readConfig).toList()
         }
 
         // then
@@ -128,20 +117,16 @@ internal class CsvReaderTest {
         "Buchung";"Empfänger";"Verwendungszweck";"Währung";"Umsatz";" "
         "21.02.2020";"John Mopp";"Laundry";"EUR";"120";"S"
         """.trimIndent()
-        val csvConfig = CsvConfig(
-                ReadConfig(
-                    DateTimeFormatter.ofPattern("dd.MM.uuuu"),
-                    ';',
-                    CsvHeaders.of(
-                            BookingDate to "Buchung",
-                            Beneficiary to "Empfänger",
-                            Description to "Verwendungszweck",
-                            MoneyFlow.MarkerFlow.Flow to "Umsatz",
-                            MoneyFlow.MarkerFlow.Marker("H", "S") to " ")),
-                WriteConfig(
-                    ';'
-                ),
-                Mappings(emptyList()))
+        val csvConfig = ReadConfig(
+            DateTimeFormatter.ofPattern("dd.MM.uuuu"),
+            ';',
+            Locale.GERMANY,
+            CsvHeaders.of(
+                    BookingDate to "Buchung",
+                    Beneficiary to "Empfänger",
+                    Description to "Verwendungszweck",
+                    MoneyFlow.MarkerFlow.Flow to "Umsatz",
+                    MoneyFlow.MarkerFlow.Marker("H", "S") to " "))
         val testling = CsvReader()
 
         // when
@@ -166,25 +151,21 @@ internal class CsvReaderTest {
         "Buchung";"Empfänger";"Verwendungszweck";"Währung";"Umsatz";" "
         "21.02.2020";"John Mopp";"Laundry";"EUR";"120";"H"
         """.trimIndent()
-        val csvConfig = CsvConfig(
-                ReadConfig(
-                    DateTimeFormatter.ofPattern("dd.MM.uuuu"),
-                    ';',
-                    CsvHeaders.of(
-                            BookingDate to "Buchung",
-                            Beneficiary to "Empfänger",
-                            Description to "Verwendungszweck",
-                            MoneyFlow.MarkerFlow.Flow to "Umsatz",
-                            MoneyFlow.MarkerFlow.Marker("H", "S") to " ")),
-                WriteConfig(
-                    ';'
-                ),
-                Mappings(emptyList()))
+        val readConfig = ReadConfig(
+            DateTimeFormatter.ofPattern("dd.MM.uuuu"),
+            ';',
+            Locale.GERMANY,
+            CsvHeaders.of(
+                    BookingDate to "Buchung",
+                    Beneficiary to "Empfänger",
+                    Description to "Verwendungszweck",
+                    MoneyFlow.MarkerFlow.Flow to "Umsatz",
+                    MoneyFlow.MarkerFlow.Marker("H", "S") to " "))
         val testling = CsvReader()
 
         // when
         val result = csv.byteInputStream().use {
-            testling.mapTransactions(it, csvConfig).toList()
+            testling.mapTransactions(it, readConfig).toList()
         }
 
         // then
@@ -200,20 +181,16 @@ internal class CsvReaderTest {
     @Test
     fun `should be able to read english singular DB transaction`(){
         // given
-        val csvConfig = CsvConfig(
-                ReadConfig(
-                    DateTimeFormatter.ofPattern("MM/dd/uuuu"),
-                    ';',
-                    CsvHeaders.of(
-                    BookingDate to "Booking date",
-                    Beneficiary to "Beneficiary / Originator",
-                    Description to "Payment Details",
-                    MoneyFlow.InOutFlow.OutFlow to "Debit",
-                    MoneyFlow.InOutFlow.InFlow to "Credit")),
-                WriteConfig(
-                    ';'
-                ),
-                Mappings(emptyList()))
+        val csvConfig = ReadConfig(
+            DateTimeFormatter.ofPattern("MM/dd/uuuu"),
+            ';',
+            Locale.US,
+            CsvHeaders.of(
+            BookingDate to "Booking date",
+            Beneficiary to "Beneficiary / Originator",
+            Description to "Payment Details",
+            MoneyFlow.InOutFlow.OutFlow to "Debit",
+            MoneyFlow.InOutFlow.InFlow to "Credit"))
         val testling = CsvReader()
 
         // when
@@ -227,27 +204,23 @@ internal class CsvReaderTest {
                 de.richargh.ynabcsvtransformer.domain.Beneficiary("ANACONDA EU"),
                 de.richargh.ynabcsvtransformer.domain.Description("111-222222-3333333 Anaconda.de"),
                 null,
-                "-150.12",
+                "150.12",
                 ""))
     }
 
     @Test
     fun `should be able to read german singular VR transaction`(){
         // given
-        val csvConfig = CsvConfig(
-                ReadConfig(
-                    DateTimeFormatter.ofPattern("dd.MM.uuuu"),
-                    ';',
-                    CsvHeaders.of(
-                    BookingDate to "Buchungstag",
-                    Beneficiary to "Empf�nger/Zahlungspflichtiger",
-                    Description to "Vorgang/Verwendungszweck",
-                    MoneyFlow.InOutFlow.OutFlow to "Umsatz",
-                    MoneyFlow.InOutFlow.InFlow to "W�hrung")),
-                WriteConfig(
-                    ';'
-                ),
-                Mappings(emptyList()))
+        val csvConfig = ReadConfig(
+            DateTimeFormatter.ofPattern("dd.MM.uuuu"),
+            ';',
+            Locale.GERMANY,
+            CsvHeaders.of(
+            BookingDate to "Buchungstag",
+            Beneficiary to "Empf�nger/Zahlungspflichtiger",
+            Description to "Vorgang/Verwendungszweck",
+            MoneyFlow.MarkerFlow.Flow to "Umsatz",
+            MoneyFlow.MarkerFlow.Marker("H", "S") to " "))
         val testling = CsvReader()
 
         // when
@@ -264,8 +237,8 @@ internal class CsvReaderTest {
                     SHELL 1122/ Frankfurt/DE
                     22.03.2021 um 09:12:34 Uhr""".trimIndent()),
                 null,
-                "33,33",
-                "EUR"))
+                "33.33",
+                "0"))
     }
 
 }

@@ -10,6 +10,7 @@
       "outFlow": "Debit"
     },
 
+    "localeLanguageTag": "en-US",
     "delimiter": ";"
   },
   "write" : {

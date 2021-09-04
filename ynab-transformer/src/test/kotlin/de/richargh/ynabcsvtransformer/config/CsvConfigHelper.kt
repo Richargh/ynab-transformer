@@ -3,6 +3,7 @@ package de.richargh.ynabcsvtransformer.config
 import de.richargh.ynabcsvtransformer.read.*
 import de.richargh.ynabcsvtransformer.domain.*
 import java.time.format.DateTimeFormatter
+import java.util.*
 
 fun configOf(vararg mappings: Mapping) = CsvConfig(
         anyReadConfig(),
@@ -12,6 +13,7 @@ fun configOf(vararg mappings: Mapping) = CsvConfig(
 private fun anyReadConfig() = ReadConfig(
         anyDatePattern(),
         ';',
+        Locale.GERMANY,
         anyHeaders()
 )
 

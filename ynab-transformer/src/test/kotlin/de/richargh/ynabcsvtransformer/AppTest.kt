@@ -26,6 +26,6 @@ class AppTest {
         // then
         assertThat(result)
                 .contains("Date;Payee;Category;Memo;Outflow;Inflow")
-                .contains("2020-02-14;Anaconda;Entertainment: Gadget;Google;111-222222-3333333 Anaconda.de Notebook;-150.12;")
+                .contains("2020-02-14;Anaconda;Entertainment: Gadget;Google;111-222222-3333333 Anaconda.de Notebook;150.12;")
     }
 }

@@ -6,18 +6,21 @@ import org.apache.commons.csv.CSVParser
 import org.apache.commons.csv.CSVRecord
 import java.io.InputStream
 import java.io.InputStreamReader
+import java.math.BigDecimal
+import java.text.DecimalFormat
 import java.time.LocalDate
 import java.time.format.DateTimeParseException
-import kotlin.math.abs
+import java.util.*
+
 
 class CsvReader {
 
     private var indexOf: Map<DomainName, Int> = emptyMap()
     private val foundHeader: Boolean get() = indexOf.isNotEmpty()
 
-    fun mapTransactions(inputStream: InputStream, config: CsvConfig): Sequence<Transaction> {
+    fun mapTransactions(inputStream: InputStream, config: ReadConfig): Sequence<Transaction> {
         val csvParser = CSVFormat.DEFAULT
-                .withDelimiter(config.read.delimiter)
+                .withDelimiter(config.delimiter)
                 .withQuote('"')
         return sequence {
             val records: CSVParser = csvParser.parse(InputStreamReader(inputStream))
@@ -27,17 +30,17 @@ class CsvReader {
         }
     }
 
-    private fun tryMap(index: Int, csvRecord: CSVRecord, config: CsvConfig): Transaction? = try {
+    private fun tryMap(index: Int, csvRecord: CSVRecord, config: ReadConfig): Transaction? = try {
         when {
             foundHeader -> mapTransaction(csvRecord, config)
-            matchColumnHeaders(csvRecord, config.read.headers) -> null
+            matchColumnHeaders(csvRecord, config.headers) -> null
             else -> null
         }
     } catch (e: Exception) {
         null
     }
 
-    private fun mapTransaction(csvRecord: CSVRecord, config: CsvConfig): Transaction? {
+    private fun mapTransaction(csvRecord: CSVRecord, config: ReadConfig): Transaction? {
         val rawBeneficiary = csvRecord.get(indexOf[DomainName.Beneficiary]!!)
         val rawDescription = csvRecord.get(indexOf[DomainName.Description]!!)
         if(rawBeneficiary.isNullOrBlank())
@@ -45,7 +48,7 @@ class CsvReader {
 
         val dateString = csvRecord.get(indexOf[DomainName.BookingDate]!!)
         val date = try {
-            LocalDate.parse(dateString, config.read.dateFormatter)
+            LocalDate.parse(dateString, config.dateFormatter)
         } catch (ex: DateTimeParseException){
             System.err.println("Could not parse $dateString. Is the pattern correct?")
             throw ex
@@ -53,18 +56,18 @@ class CsvReader {
 
         val (inFlow, outFlow) = if(indexOf.containsKey(DomainName.MoneyFlow.InOutFlow.InFlow)){
             Pair(
-                    csvRecord.get(indexOf[DomainName.MoneyFlow.InOutFlow.InFlow]!!),
-                    csvRecord.get(indexOf[DomainName.MoneyFlow.InOutFlow.OutFlow]!!))
+                    csvRecord.numberOrNull(DomainName.MoneyFlow.InOutFlow.InFlow, config)?.abs()?.toString() ?: "",
+                    csvRecord.numberOrNull(DomainName.MoneyFlow.InOutFlow.OutFlow, config)?.abs()?.toString() ?: "")
         } else if(indexOf.containsKey(DomainName.MoneyFlow.PlusMinusFlow.Flow)){
-            val flow = csvRecord.get(indexOf[DomainName.MoneyFlow.PlusMinusFlow.Flow]!!).toIntOrNull()
+            val flow = csvRecord.numberOrNull(DomainName.MoneyFlow.PlusMinusFlow.Flow, config)
             if(flow == null)
                 Pair("", "")
             else
                 Pair(
-                    if(flow < 0) "0" else "$flow",
-                    if(flow < 0) "${abs(flow)}" else "0")
+                    if(flow < BigDecimal.ZERO) "0" else "${flow.abs()}",
+                    if(flow < BigDecimal.ZERO) "${flow.abs()}" else "0")
         }  else if(indexOf.containsKey(DomainName.MoneyFlow.MarkerFlow.Flow)){
-            val flow = csvRecord.get(indexOf[DomainName.MoneyFlow.MarkerFlow.Flow]!!).toIntOrNull()
+            val flow = csvRecord.numberOrNull(DomainName.MoneyFlow.MarkerFlow.Flow, config)?.abs()
             // FIXME this line is slow because it is repeated so often.
             //  Is there some way to get both key and value from a hashmap directly?
             val m = indexOf.keys.first { it == DomainName.MoneyFlow.MarkerFlow.Marker.any() } as DomainName.MoneyFlow.MarkerFlow.Marker
@@ -91,6 +94,17 @@ class CsvReader {
                 outFlow,
                 inFlow
         )
+    }
+
+    private fun CSVRecord.numberOrNull(name: DomainName, config: ReadConfig): BigDecimal? {
+        val raw = get(indexOf[name]!!)
+        if(raw.isNullOrEmpty())
+            return null
+
+        val numberFormat = DecimalFormat.getInstance(config.locale) as DecimalFormat
+        numberFormat.isParseBigDecimal = true
+
+        return numberFormat.parse(raw) as BigDecimal
     }
 
     private fun matchColumnHeaders(csvRecord: CSVRecord, headerMappings: CsvHeaders): Boolean {

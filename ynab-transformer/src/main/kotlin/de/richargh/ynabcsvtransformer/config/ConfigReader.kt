@@ -14,6 +14,7 @@ import de.richargh.ynabcsvtransformer.lang.fail
 import de.richargh.ynabcsvtransformer.lang.ok
 import java.io.InputStream
 import java.time.format.DateTimeFormatter
+import java.util.*
 
 class ConfigReader {
 
@@ -43,6 +44,7 @@ class ConfigReader {
                 ReadConfig(
                     DateTimeFormatter.ofPattern(csvConfigDto.read.bookingDatePattern),
                     csvConfigDto.read.delimiter,
+                    Locale.forLanguageTag(csvConfigDto.read.localeLanguageTag),
                     CsvHeaders.of(
                             DomainName.BookingDate to csvConfigDto.read.bookingDate,
                             DomainName.Beneficiary to csvConfigDto.read.beneficiary,

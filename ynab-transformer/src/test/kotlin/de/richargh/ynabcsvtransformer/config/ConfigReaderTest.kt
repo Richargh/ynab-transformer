@@ -25,6 +25,7 @@ class ConfigReaderTest {
                 "flow": "Sales"
             },
             
+            "localeLanguageTag": "en-US",
             "delimiter": ";"
           },
           "write" : {
@@ -65,6 +66,7 @@ class ConfigReaderTest {
                 "outFlow": "Debit"
             },
             
+            "localeLanguageTag": "en-US",
             "delimiter": ";"
           },
           "write" : {
@@ -108,6 +110,7 @@ class ConfigReaderTest {
                 "markerOutFlow": "S"
             },
             
+            "localeLanguageTag": "en-US",
             "delimiter": ";"
           },
           "write": {
@@ -152,6 +155,7 @@ class ConfigReaderTest {
                 "outFlow": "Debit"
             },
             
+            "localeLanguageTag": "en-US",
             "delimiter": ","
           },
           "write": {
@@ -197,6 +201,7 @@ class ConfigReaderTest {
                 "outFlow": "Debit"
             },
             
+            "localeLanguageTag": "en-US",
             "delimiter": ";"
           },
           "write": {
@@ -242,6 +247,7 @@ class ConfigReaderTest {
                 "outFlow": "Debit"
             },
             
+            "localeLanguageTag": "en-US",
             "delimiter": ";"
           },
           "write": {
@@ -288,6 +294,7 @@ class ConfigReaderTest {
                 "outFlow": "Debit"
             },
             
+            "localeLanguageTag": "en-US",
             "delimiter": ";"
           },
           "write": {

@@ -16,7 +16,8 @@ class ReadDto(
         val description: String,
         val flow: FlowDto,
 
-        val delimiter: Char
+        val delimiter: Char,
+        val localeLanguageTag: String
 )
 
 class WriteDto(

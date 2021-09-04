@@ -6,6 +6,7 @@ import de.richargh.ynabcsvtransformer.domain.Description
 import de.richargh.ynabcsvtransformer.domain.Outflow
 import java.security.InvalidParameterException
 import java.time.format.DateTimeFormatter
+import java.util.*
 
 class CsvConfig(
         val read: ReadConfig,
@@ -16,6 +17,7 @@ class CsvConfig(
 class ReadConfig(
         val dateFormatter: DateTimeFormatter,
         val delimiter: Char,
+        val locale: Locale,
         val headers: CsvHeaders
 )
 
