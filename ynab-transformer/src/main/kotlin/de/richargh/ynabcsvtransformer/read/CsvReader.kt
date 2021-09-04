@@ -11,7 +11,6 @@ import java.math.BigDecimal.*
 import java.text.DecimalFormat
 import java.time.LocalDate
 import java.time.format.DateTimeParseException
-import java.util.*
 
 
 class CsvReader {
@@ -19,7 +18,7 @@ class CsvReader {
     private var indexOf: Map<DomainName, Int> = emptyMap()
     private val foundHeader: Boolean get() = indexOf.isNotEmpty()
 
-    fun mapTransactions(inputStream: InputStream, config: ReadConfig): Sequence<Transaction> {
+    fun read(inputStream: InputStream, config: ReadConfig): Sequence<Transaction> {
         val csvParser = CSVFormat.DEFAULT
                 .withDelimiter(config.delimiter)
                 .withQuote('"')
@@ -33,7 +32,7 @@ class CsvReader {
 
     private fun tryMap(index: Int, csvRecord: CSVRecord, config: ReadConfig): Transaction? = try {
         when {
-            foundHeader -> mapTransaction(csvRecord, config)
+            foundHeader -> extractTransaction(csvRecord, config)
             matchColumnHeaders(csvRecord, config.headers) -> null
             else -> null
         }
@@ -41,7 +40,7 @@ class CsvReader {
         null
     }
 
-    private fun mapTransaction(csvRecord: CSVRecord, config: ReadConfig): Transaction? {
+    private fun extractTransaction(csvRecord: CSVRecord, config: ReadConfig): Transaction? {
         val rawBeneficiary = csvRecord.get(indexOf[DomainName.Beneficiary]!!)
         val rawDescription = csvRecord.get(indexOf[DomainName.Description]!!)
         if(rawBeneficiary.isNullOrBlank())

@@ -28,7 +28,7 @@ class YnabCsvWriterTest {
 
         // when
         val result = ByteArrayOutputStream().use { stream ->
-            testling.mapTransactions(sequenceOf(transaction), writeConfig, stream.writer())
+            testling.write(sequenceOf(transaction), writeConfig, stream.writer())
             stream.toString()
         }
 
@@ -51,7 +51,7 @@ class YnabCsvWriterTest {
 
         // when
         val result = ByteArrayOutputStream().use { stream ->
-            testling.mapTransactions(sequenceOf(transaction), writeConfig, stream.writer())
+            testling.write(sequenceOf(transaction), writeConfig, stream.writer())
             stream.toString()
         }
 
@@ -74,7 +74,7 @@ class YnabCsvWriterTest {
 
         // when
         val result = ByteArrayOutputStream().use { stream ->
-            testling.mapTransactions(sequenceOf(transaction), writeConfig, stream.writer())
+            testling.write(sequenceOf(transaction), writeConfig, stream.writer())
             stream.toString()
         }
 
@@ -97,7 +97,7 @@ class YnabCsvWriterTest {
 
         // when
         val result = ByteArrayOutputStream().use { stream ->
-            testling.mapTransactions(sequenceOf(transaction), writeConfig, stream.writer())
+            testling.write(sequenceOf(transaction), writeConfig, stream.writer())
             stream.toString()
         }
 

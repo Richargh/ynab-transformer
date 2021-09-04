@@ -21,9 +21,9 @@ class App {
     }
 
     fun transform(csv: InputStream, config: CsvConfig, writer: Writer){
-        val results = reader.mapTransactions(csv, config.read)
+        val results = reader.read(csv, config.read)
                 .map { transform(it, config.mappings) }
-        csvWriter.mapTransactions(results, config.write, writer)
+        csvWriter.write(results, config.write, writer)
     }
 
     private fun transform(transaction: Transaction, mappings: Mappings): Transaction {

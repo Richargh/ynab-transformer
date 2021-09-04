@@ -9,7 +9,7 @@ import java.text.DecimalFormat
 
 class YnabCsvWriter {
 
-    fun mapTransactions(transactions: Sequence<Transaction>, writeConfig: WriteConfig, writer: Writer) {
+    fun write(transactions: Sequence<Transaction>, writeConfig: WriteConfig, writer: Writer) {
         val csvPrinter = CSVPrinter(writer,
                 CSVFormat.DEFAULT
                         .withDelimiter(writeConfig.delimiter)

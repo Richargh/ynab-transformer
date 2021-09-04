@@ -32,7 +32,7 @@ internal class CsvReaderTest {
 
         // when
         val result = csv.byteInputStream().use {
-            testling.mapTransactions(it, readConfig).toList()
+            testling.read(it, readConfig).toList()
         }
 
         // then
@@ -65,7 +65,7 @@ internal class CsvReaderTest {
 
         // when
         val result = csv.byteInputStream().use {
-            testling.mapTransactions(it, readConfig).toList()
+            testling.read(it, readConfig).toList()
         }
 
         // then
@@ -99,7 +99,7 @@ internal class CsvReaderTest {
 
         // when
         val result = csv.byteInputStream().use {
-            testling.mapTransactions(it, readConfig).toList()
+            testling.read(it, readConfig).toList()
         }
 
         // then
@@ -133,7 +133,7 @@ internal class CsvReaderTest {
 
         // when
         val result = csv.byteInputStream().use {
-            testling.mapTransactions(it, csvConfig).toList()
+            testling.read(it, csvConfig).toList()
         }
 
         // then
@@ -167,7 +167,7 @@ internal class CsvReaderTest {
 
         // when
         val result = csv.byteInputStream().use {
-            testling.mapTransactions(it, readConfig).toList()
+            testling.read(it, readConfig).toList()
         }
 
         // then
@@ -197,7 +197,7 @@ internal class CsvReaderTest {
 
         // when
         val result = javaClass.getResourceAsStream("DB-Transactions-Single1[EN].csv").use {
-            testling.mapTransactions(it, csvConfig).toList()
+            testling.read(it, csvConfig).toList()
         }
 
         // then
@@ -227,7 +227,7 @@ internal class CsvReaderTest {
 
         // when
         val result = javaClass.getResourceAsStream("VR-Transactions-Single1[DE].csv").use {
-            testling.mapTransactions(it, csvConfig).toList()
+            testling.read(it, csvConfig).toList()
         }
 
         // then
