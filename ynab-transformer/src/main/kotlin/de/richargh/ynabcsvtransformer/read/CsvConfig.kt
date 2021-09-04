@@ -22,7 +22,8 @@ class ReadConfig(
 )
 
 class WriteConfig(
-        val delimiter: Char
+        val delimiter: Char,
+        val locale: Locale
 )
 
 class CsvHeaders private constructor(

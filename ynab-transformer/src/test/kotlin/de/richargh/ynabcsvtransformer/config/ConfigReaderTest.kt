@@ -29,6 +29,7 @@ class ConfigReaderTest {
             "delimiter": ";"
           },
           "write" : {
+            "localeLanguageTag": "en-US",
             "delimiter": ";"
           },
           "mappings": []
@@ -70,6 +71,7 @@ class ConfigReaderTest {
             "delimiter": ";"
           },
           "write" : {
+            "localeLanguageTag": "en-US",
             "delimiter": ";"
           },
           "mappings": []
@@ -114,6 +116,7 @@ class ConfigReaderTest {
             "delimiter": ";"
           },
           "write": {
+            "localeLanguageTag": "en-US",
             "delimiter": ";"
           },
           "mappings": []
@@ -159,6 +162,7 @@ class ConfigReaderTest {
             "delimiter": ","
           },
           "write": {
+            "localeLanguageTag": "en-US",
             "delimiter": "|"
           },
           "mappings": [
@@ -205,6 +209,7 @@ class ConfigReaderTest {
             "delimiter": ";"
           },
           "write": {
+            "localeLanguageTag": "en-US",
             "delimiter": ";"
           },
           "mappings": [
@@ -251,6 +256,7 @@ class ConfigReaderTest {
             "delimiter": ";"
           },
           "write": {
+            "localeLanguageTag": "en-US",
             "delimiter": ";"
           },
           "mappings": [
@@ -298,6 +304,7 @@ class ConfigReaderTest {
             "delimiter": ";"
           },
           "write": {
+            "localeLanguageTag": "en-US",
             "delimiter": ";"
           },
           "mappings": [

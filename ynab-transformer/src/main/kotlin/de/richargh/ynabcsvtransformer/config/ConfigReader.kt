@@ -51,7 +51,8 @@ class ConfigReader {
                             DomainName.Description to csvConfigDto.read.description,
                             *moneyFlow)),
                 WriteConfig(
-                    csvConfigDto.write.delimiter
+                    csvConfigDto.write.delimiter,
+                    Locale.forLanguageTag(csvConfigDto.write.localeLanguageTag)
                 ),
                 Mappings(csvConfigDto.mappings.map(::mapping))))
     }

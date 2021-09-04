@@ -14,6 +14,7 @@
     "delimiter": ";"
   },
   "write" : {
+    "localeLanguageTag": "en-US",
     "delimiter": ";"
   },
   "mappings": [

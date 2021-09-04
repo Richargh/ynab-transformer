@@ -18,7 +18,8 @@ private fun anyReadConfig() = ReadConfig(
 )
 
 private fun anyWriteConfig() = WriteConfig(
-        ';'
+        ';',
+        Locale.GERMANY
 )
 
 private fun anyDatePattern() = DateTimeFormatter.ofPattern("MM/dd/uuuu")

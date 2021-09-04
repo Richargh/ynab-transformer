@@ -21,7 +21,8 @@ class ReadDto(
 )
 
 class WriteDto(
-        val delimiter: Char
+        val delimiter: Char,
+        val localeLanguageTag: String
 )
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type")
