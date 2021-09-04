@@ -32,7 +32,7 @@ class Cli : Callable<Int> {
             println("Config is not correct. Problems: ${configResult.messages}")
             return 1
         }
-        app.transform(csv.inputStream(), (configResult as Res.Ok).value)
+        app.transform(csv.inputStream(), (configResult as Res.Ok).value, System.out.writer())
 
         return 0
     }

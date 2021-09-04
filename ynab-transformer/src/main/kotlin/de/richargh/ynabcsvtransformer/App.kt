@@ -8,21 +8,22 @@ import de.richargh.ynabcsvtransformer.read.CsvReader
 import de.richargh.ynabcsvtransformer.read.Mappings
 import de.richargh.ynabcsvtransformer.lang.Res
 import java.io.InputStream
+import java.io.Writer
 
 class App {
 
     private val configReader = ConfigReader()
     private val reader = CsvReader()
-    private val writer = YnabCsvWriter()
+    private val csvWriter = YnabCsvWriter()
 
     fun readConfig(config: InputStream): Res<CsvConfig>{
         return configReader.csvConfig(config)
     }
 
-    fun transform(csv: InputStream, config: CsvConfig){
+    fun transform(csv: InputStream, config: CsvConfig, writer: Writer){
         val results = reader.mapTransactions(csv, config)
                 .map { transform(it, config.mappings) }
-        writer.mapTransactions(results)
+        csvWriter.mapTransactions(results, writer)
     }
 
     private fun transform(transaction: Transaction, mappings: Mappings): Transaction {
