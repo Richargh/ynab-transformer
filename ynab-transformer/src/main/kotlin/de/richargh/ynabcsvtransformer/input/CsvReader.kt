@@ -29,7 +29,7 @@ class CsvReader {
     private fun tryMap(index: Int, csvRecord: CSVRecord, config: CsvConfig): Transaction? = try {
         when {
             foundHeader -> mapTransaction(csvRecord, config)
-            matchColumnHeaders(csvRecord, config.headers) -> null
+            matchColumnHeaders(csvRecord, config.read.headers) -> null
             else -> null
         }
     } catch (e: Exception) {
@@ -39,7 +39,7 @@ class CsvReader {
     private fun mapTransaction(csvRecord: CSVRecord, config: CsvConfig): Transaction? {
         val dateString = csvRecord.get(indexOf[DomainName.BookingDate]!!)
 
-        val date = LocalDate.parse(dateString, config.dateFormatter)
+        val date = LocalDate.parse(dateString, config.read.dateFormatter)
         val rawBeneficiary = csvRecord.get(indexOf[DomainName.Beneficiary]!!)
         val rawDescription = csvRecord.get(indexOf[DomainName.Description]!!)
 

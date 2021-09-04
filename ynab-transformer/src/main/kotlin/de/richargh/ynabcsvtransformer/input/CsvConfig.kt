@@ -8,8 +8,7 @@ import java.security.InvalidParameterException
 import java.time.format.DateTimeFormatter
 
 class CsvConfig(
-        val dateFormatter: DateTimeFormatter,
-        val headers: CsvHeaders,
+        val read: ReadConfig,
         val mappings: List<Mapping>
 ) {
     fun mappingWith(beneficiary: Beneficiary, description: Description): Mapping? {
@@ -19,6 +18,11 @@ class CsvConfig(
         }
     }
 }
+
+class ReadConfig(
+        val dateFormatter: DateTimeFormatter,
+        val headers: CsvHeaders
+)
 
 class CsvHeaders private constructor(
         val nameOfColumn: Map<CsvColumn, DomainName>) {

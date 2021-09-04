@@ -40,12 +40,13 @@ class ConfigReader {
         }
 
         return ok(CsvConfig(
-                DateTimeFormatter.ofPattern(csvConfigDto.read.bookingDatePattern),
-                CsvHeaders.of(
-                        DomainName.BookingDate to csvConfigDto.read.bookingDate,
-                        DomainName.Beneficiary to csvConfigDto.read.beneficiary,
-                        DomainName.Description to csvConfigDto.read.description,
-                        *moneyFlow),
+                ReadConfig(
+                    DateTimeFormatter.ofPattern(csvConfigDto.read.bookingDatePattern),
+                    CsvHeaders.of(
+                            DomainName.BookingDate to csvConfigDto.read.bookingDate,
+                            DomainName.Beneficiary to csvConfigDto.read.beneficiary,
+                            DomainName.Description to csvConfigDto.read.description,
+                            *moneyFlow)),
                 csvConfigDto.mappings.map(::mapping)))
     }
 

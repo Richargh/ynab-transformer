@@ -17,12 +17,13 @@ internal class CsvReaderTest {
         "21.02.2020";"John Mopp";"Laundry";"EUR";"-120"
         """.trimIndent()
         val csvConfig = CsvConfig(
-                DateTimeFormatter.ofPattern("dd.MM.uuuu"),
-                CsvHeaders.of(
-                    BookingDate to "Buchung",
-                    Beneficiary to "Empfänger",
-                    Description to "Verwendungszweck",
-                    MoneyFlow.PlusMinusFlow.Flow to "Umsatz"),
+                ReadConfig(
+                    DateTimeFormatter.ofPattern("dd.MM.uuuu"),
+                    CsvHeaders.of(
+                        BookingDate to "Buchung",
+                        Beneficiary to "Empfänger",
+                        Description to "Verwendungszweck",
+                        MoneyFlow.PlusMinusFlow.Flow to "Umsatz")),
                 emptyList())
         val testling = CsvReader()
 
@@ -50,12 +51,13 @@ internal class CsvReaderTest {
         "21.02.2020";"John Mopp";"Laundry";"EUR";"120"
         """.trimIndent()
         val csvConfig = CsvConfig(
-                DateTimeFormatter.ofPattern("dd.MM.uuuu"),
-                CsvHeaders.of(
-                        BookingDate to "Buchung",
-                        Beneficiary to "Empfänger",
-                        Description to "Verwendungszweck",
-                        MoneyFlow.PlusMinusFlow.Flow to "Umsatz"),
+                ReadConfig(
+                    DateTimeFormatter.ofPattern("dd.MM.uuuu"),
+                    CsvHeaders.of(
+                            BookingDate to "Buchung",
+                            Beneficiary to "Empfänger",
+                            Description to "Verwendungszweck",
+                            MoneyFlow.PlusMinusFlow.Flow to "Umsatz")),
                 emptyList())
         val testling = CsvReader()
 
@@ -83,13 +85,14 @@ internal class CsvReaderTest {
         "21.02.2020";"John Mopp";"Laundry";"EUR";"120";"0"
         """.trimIndent()
         val csvConfig = CsvConfig(
-                DateTimeFormatter.ofPattern("dd.MM.uuuu"),
-                CsvHeaders.of(
-                        BookingDate to "Buchung",
-                        Beneficiary to "Empfänger",
-                        Description to "Verwendungszweck",
-                        MoneyFlow.InOutFlow.OutFlow to "Soll",
-                        MoneyFlow.InOutFlow.InFlow to "Haben"),
+                ReadConfig(
+                    DateTimeFormatter.ofPattern("dd.MM.uuuu"),
+                    CsvHeaders.of(
+                            BookingDate to "Buchung",
+                            Beneficiary to "Empfänger",
+                            Description to "Verwendungszweck",
+                            MoneyFlow.InOutFlow.OutFlow to "Soll",
+                            MoneyFlow.InOutFlow.InFlow to "Haben")),
                 emptyList())
         val testling = CsvReader()
 
@@ -117,13 +120,14 @@ internal class CsvReaderTest {
         "21.02.2020";"John Mopp";"Laundry";"EUR";"120";"S"
         """.trimIndent()
         val csvConfig = CsvConfig(
-                DateTimeFormatter.ofPattern("dd.MM.uuuu"),
-                CsvHeaders.of(
-                        BookingDate to "Buchung",
-                        Beneficiary to "Empfänger",
-                        Description to "Verwendungszweck",
-                        MoneyFlow.MarkerFlow.Flow to "Umsatz",
-                        MoneyFlow.MarkerFlow.Marker("H", "S") to " "),
+                ReadConfig(
+                    DateTimeFormatter.ofPattern("dd.MM.uuuu"),
+                    CsvHeaders.of(
+                            BookingDate to "Buchung",
+                            Beneficiary to "Empfänger",
+                            Description to "Verwendungszweck",
+                            MoneyFlow.MarkerFlow.Flow to "Umsatz",
+                            MoneyFlow.MarkerFlow.Marker("H", "S") to " ")),
                 emptyList())
         val testling = CsvReader()
 
@@ -151,13 +155,14 @@ internal class CsvReaderTest {
         "21.02.2020";"John Mopp";"Laundry";"EUR";"120";"H"
         """.trimIndent()
         val csvConfig = CsvConfig(
-                DateTimeFormatter.ofPattern("dd.MM.uuuu"),
-                CsvHeaders.of(
-                        BookingDate to "Buchung",
-                        Beneficiary to "Empfänger",
-                        Description to "Verwendungszweck",
-                        MoneyFlow.MarkerFlow.Flow to "Umsatz",
-                        MoneyFlow.MarkerFlow.Marker("H", "S") to " "),
+                ReadConfig(
+                    DateTimeFormatter.ofPattern("dd.MM.uuuu"),
+                    CsvHeaders.of(
+                            BookingDate to "Buchung",
+                            Beneficiary to "Empfänger",
+                            Description to "Verwendungszweck",
+                            MoneyFlow.MarkerFlow.Flow to "Umsatz",
+                            MoneyFlow.MarkerFlow.Marker("H", "S") to " ")),
                 emptyList())
         val testling = CsvReader()
 
@@ -181,13 +186,14 @@ internal class CsvReaderTest {
     fun `should be able to read english singular DB transaction`(){
         // arrange
         val csvConfig = CsvConfig(
-                DateTimeFormatter.ofPattern("MM/dd/uuuu"),
-                CsvHeaders.of(
-                BookingDate to "Booking date",
-                Beneficiary to "Beneficiary / Originator",
-                Description to "Payment Details",
-                MoneyFlow.InOutFlow.OutFlow to "Debit",
-                MoneyFlow.InOutFlow.InFlow to "Credit"),
+                ReadConfig(
+                    DateTimeFormatter.ofPattern("MM/dd/uuuu"),
+                    CsvHeaders.of(
+                    BookingDate to "Booking date",
+                    Beneficiary to "Beneficiary / Originator",
+                    Description to "Payment Details",
+                    MoneyFlow.InOutFlow.OutFlow to "Debit",
+                    MoneyFlow.InOutFlow.InFlow to "Credit")),
                 emptyList())
         val testling = CsvReader()
 
@@ -211,13 +217,14 @@ internal class CsvReaderTest {
     fun `should be able to read german singular VR transaction`(){
         // arrange
         val csvConfig = CsvConfig(
-                DateTimeFormatter.ofPattern("dd.MM.uuuu"),
-                CsvHeaders.of(
-                BookingDate to "Buchungstag",
-                Beneficiary to "Empf�nger/Zahlungspflichtiger",
-                Description to "Vorgang/Verwendungszweck",
-                MoneyFlow.InOutFlow.OutFlow to "Umsatz",
-                MoneyFlow.InOutFlow.InFlow to "W�hrung"),
+                ReadConfig(
+                    DateTimeFormatter.ofPattern("dd.MM.uuuu"),
+                    CsvHeaders.of(
+                    BookingDate to "Buchungstag",
+                    Beneficiary to "Empf�nger/Zahlungspflichtiger",
+                    Description to "Vorgang/Verwendungszweck",
+                    MoneyFlow.InOutFlow.OutFlow to "Umsatz",
+                    MoneyFlow.InOutFlow.InFlow to "W�hrung")),
                 emptyList())
         val testling = CsvReader()
 

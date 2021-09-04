@@ -4,11 +4,14 @@ import de.richargh.ynabcsvtransformer.input.*
 import de.richargh.ynabcsvtransformer.domain.*
 import java.time.format.DateTimeFormatter
 
-
 fun configOf(vararg mappings: Mapping) = CsvConfig(
-        anyDatePattern(),
-        anyHeaders(),
+        anyReadConfig(),
         mappings.asList())
+
+private fun anyReadConfig() = ReadConfig(
+        anyDatePattern(),
+        anyHeaders()
+)
 
 private fun anyDatePattern() = DateTimeFormatter.ofPattern("MM/dd/uuuu")
 

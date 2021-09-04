@@ -38,7 +38,7 @@ class ConfigReaderTest {
 
         // then
         assertThat(result).isInstanceOf(Res.Ok::class.java)
-        assertThat((result as Res.Ok<CsvConfig>).value.headers.nameOfColumn)
+        assertThat((result as Res.Ok<CsvConfig>).value.read.headers.nameOfColumn)
                 .containsEntry(CsvColumn("Booking date"), DomainName.BookingDate)
                 .containsEntry(CsvColumn("Beneficiary / Originator"), DomainName.Beneficiary)
                 .containsEntry(CsvColumn("Payment Details"), DomainName.Description)
@@ -74,7 +74,7 @@ class ConfigReaderTest {
 
         // then
         assertThat(result).isInstanceOf(Res.Ok::class.java)
-        assertThat((result as Res.Ok<CsvConfig>).value.headers.nameOfColumn)
+        assertThat((result as Res.Ok<CsvConfig>).value.read.headers.nameOfColumn)
                 .containsEntry(CsvColumn("Booking date"), DomainName.BookingDate)
                 .containsEntry(CsvColumn("Beneficiary / Originator"), DomainName.Beneficiary)
                 .containsEntry(CsvColumn("Payment Details"), DomainName.Description)
@@ -113,13 +113,13 @@ class ConfigReaderTest {
 
         // then
         assertThat(result).isInstanceOf(Res.Ok::class.java)
-        assertThat((result as Res.Ok<CsvConfig>).value.headers.nameOfColumn)
+        assertThat((result as Res.Ok<CsvConfig>).value.read.headers.nameOfColumn)
                 .containsEntry(CsvColumn("Booking date"), DomainName.BookingDate)
                 .containsEntry(CsvColumn("Beneficiary / Originator"), DomainName.Beneficiary)
                 .containsEntry(CsvColumn("Payment Details"), DomainName.Description)
                 .containsEntry(CsvColumn("Sales"), DomainName.MoneyFlow.MarkerFlow.Flow)
                 .containsEntry(CsvColumn(" "), DomainName.MoneyFlow.MarkerFlow.Marker.any())
-        val marker = result.value.headers.nameOfColumn[CsvColumn(" ")] as DomainName.MoneyFlow.MarkerFlow.Marker
+        val marker = result.value.read.headers.nameOfColumn[CsvColumn(" ")] as DomainName.MoneyFlow.MarkerFlow.Marker
         assertThat(marker.inFlowMarker).isEqualTo("H")
         assertThat(marker.outFlowMarker).isEqualTo("S")
     }
