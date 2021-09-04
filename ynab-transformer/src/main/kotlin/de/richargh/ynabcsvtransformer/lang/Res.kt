@@ -1,4 +1,4 @@
-package de.richargh.ynabcsvtransformer.result
+package de.richargh.ynabcsvtransformer.lang
 
 sealed class Res<T: Any> {
     class Ok<T: Any>(val value: T): Res<T>(){

@@ -1,6 +1,6 @@
 package de.richargh.ynabcsvtransformer
 
-import de.richargh.ynabcsvtransformer.result.Res
+import de.richargh.ynabcsvtransformer.lang.Res
 import picocli.CommandLine
 import picocli.CommandLine.*
 import java.io.File

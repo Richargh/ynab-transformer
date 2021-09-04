@@ -6,7 +6,7 @@ import de.richargh.ynabcsvtransformer.export.YnabCsvWriter
 import de.richargh.ynabcsvtransformer.input.CsvConfig
 import de.richargh.ynabcsvtransformer.input.CsvReader
 import de.richargh.ynabcsvtransformer.input.Mappings
-import de.richargh.ynabcsvtransformer.result.Res
+import de.richargh.ynabcsvtransformer.lang.Res
 import java.io.InputStream
 
 class App {
