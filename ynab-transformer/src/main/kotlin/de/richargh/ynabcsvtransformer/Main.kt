@@ -9,7 +9,7 @@ import kotlin.system.exitProcess
 
 @Command(name = "checksum", mixinStandardHelpOptions = true, version = ["checksum 4.0"],
         description = ["Prints the checksum (MD5 by default) of a file to STDOUT."])
-class Checksum : Callable<Int> {
+class Cli : Callable<Int> {
 
     @Parameters(index = "0", description = ["The csv file to transform."])
     lateinit var csv: File
@@ -39,15 +39,15 @@ class Checksum : Callable<Int> {
 
     private fun ensureFilesExist(): Int {
         if(!csv.exists()){
-            println("${Checksum::csv.name}=${csv.absolutePath} does not exist.")
+            println("${Cli::csv.name}=${csv.absolutePath} does not exist.")
             return 1
         }
         if(!config.exists()){
-            println("${Checksum::config.name}=${config.absolutePath} does not exist.")
+            println("${Cli::config.name}=${config.absolutePath} does not exist.")
             return 1
         }
         if(outputFile != null && !outputFile.exists()){
-            println("${Checksum::outputFile.name}=${outputFile.absolutePath} does not exist.")
+            println("${Cli::outputFile.name}=${outputFile.absolutePath} does not exist.")
             return 1
         }
 
@@ -55,4 +55,4 @@ class Checksum : Callable<Int> {
     }
 }
 
-fun main(args: Array<String>) : Unit = exitProcess(CommandLine(Checksum()).execute(*args))
+fun main(args: Array<String>) : Unit = exitProcess(CommandLine(Cli()).execute(*args))
