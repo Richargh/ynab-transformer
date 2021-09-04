@@ -4,12 +4,12 @@ import com.fasterxml.jackson.annotation.JsonSubTypes
 import com.fasterxml.jackson.annotation.JsonTypeInfo
 
 class CsvConfigDto(
-        val dateTimePattern: String,
-        val header: HeaderConfigDto,
+        val read: ReadDto,
         val mappings: List<MappingDto>
 )
 
-class HeaderConfigDto(
+class ReadDto(
+        val bookingDatePattern: String,
         val bookingDate: String,
         val beneficiary: String,
         val description: String,

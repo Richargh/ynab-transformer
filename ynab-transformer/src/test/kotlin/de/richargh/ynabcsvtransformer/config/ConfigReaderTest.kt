@@ -15,8 +15,8 @@ class ConfigReaderTest {
         // given
         val config = """
         {
-          "dateTimePattern": "MM/dd/uuuu",
-          "header": {
+          "read": {
+            "bookingDatePattern": "MM/dd/uuuu",
             "bookingDate": "Booking date",
             "beneficiary": "Beneficiary / Originator",
             "description": "Payment Details",
@@ -50,8 +50,8 @@ class ConfigReaderTest {
         // given
         val config = """
         {
-          "dateTimePattern": "MM/dd/uuuu",
-          "header": {
+          "read": {
+            "bookingDatePattern": "MM/dd/uuuu",
             "bookingDate": "Booking date",
             "beneficiary": "Beneficiary / Originator",
             "description": "Payment Details",
@@ -87,8 +87,8 @@ class ConfigReaderTest {
         // given
         val config = """
         {
-          "dateTimePattern": "MM/dd/uuuu",
-          "header": {
+          "read": {
+            "bookingDatePattern": "MM/dd/uuuu",
             "bookingDate": "Booking date",
             "beneficiary": "Beneficiary / Originator",
             "description": "Payment Details",
@@ -129,8 +129,8 @@ class ConfigReaderTest {
         // given
         val config = """
         {
-          "dateTimePattern": "MM/dd/uuuu",
-          "header": {
+          "read": {
+            "bookingDatePattern": "MM/dd/uuuu",
             "bookingDate": "Booking date",
             "beneficiary": "Beneficiary / Originator",
             "description": "Payment Details",
@@ -170,8 +170,8 @@ class ConfigReaderTest {
         // given
         val config = """
         {
-          "dateTimePattern": "MM/dd/uuuu",
-          "header": {
+          "read": {
+            "bookingDatePattern": "MM/dd/uuuu",
             "bookingDate": "Booking date",
             "beneficiary": "Beneficiary / Originator",
             "description": "Payment Details",
@@ -212,8 +212,8 @@ class ConfigReaderTest {
         // given
         val config = """
         {
-          "dateTimePattern": "MM/dd/uuuu",
-          "header": {
+          "read": {
+            "bookingDatePattern": "MM/dd/uuuu",
             "bookingDate": "Booking date",
             "beneficiary": "Beneficiary / Originator",
             "description": "Payment Details",

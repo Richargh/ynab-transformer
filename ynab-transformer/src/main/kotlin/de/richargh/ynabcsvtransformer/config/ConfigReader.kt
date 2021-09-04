@@ -26,25 +26,25 @@ class ConfigReader {
             return fail(e.message!!)
         }
 
-        val moneyFlow = when(csvConfigDto.header.flow){
+        val moneyFlow = when(csvConfigDto.read.flow){
             is PlusMinusFlowDto -> arrayOf(
-                    DomainName.MoneyFlow.PlusMinusFlow.Flow to csvConfigDto.header.flow.flow)
+                    DomainName.MoneyFlow.PlusMinusFlow.Flow to csvConfigDto.read.flow.flow)
             is InOutFlowDto -> arrayOf(
-                    DomainName.MoneyFlow.InOutFlow.InFlow to csvConfigDto.header.flow.inFlow,
-                    DomainName.MoneyFlow.InOutFlow.OutFlow to csvConfigDto.header.flow.outFlow)
+                    DomainName.MoneyFlow.InOutFlow.InFlow to csvConfigDto.read.flow.inFlow,
+                    DomainName.MoneyFlow.InOutFlow.OutFlow to csvConfigDto.read.flow.outFlow)
             is MarkerFlowDto -> arrayOf(
-                    DomainName.MoneyFlow.MarkerFlow.Flow to csvConfigDto.header.flow.flow,
+                    DomainName.MoneyFlow.MarkerFlow.Flow to csvConfigDto.read.flow.flow,
                     DomainName.MoneyFlow.MarkerFlow.Marker(
-                        inFlowMarker = csvConfigDto.header.flow.markerInFlow,
-                        outFlowMarker = csvConfigDto.header.flow.markerOutFlow) to csvConfigDto.header.flow.marker)
+                        inFlowMarker = csvConfigDto.read.flow.markerInFlow,
+                        outFlowMarker = csvConfigDto.read.flow.markerOutFlow) to csvConfigDto.read.flow.marker)
         }
 
         return ok(CsvConfig(
-                DateTimeFormatter.ofPattern(csvConfigDto.dateTimePattern),
+                DateTimeFormatter.ofPattern(csvConfigDto.read.bookingDatePattern),
                 CsvHeaders.of(
-                        DomainName.BookingDate to csvConfigDto.header.bookingDate,
-                        DomainName.Beneficiary to csvConfigDto.header.beneficiary,
-                        DomainName.Description to csvConfigDto.header.description,
+                        DomainName.BookingDate to csvConfigDto.read.bookingDate,
+                        DomainName.Beneficiary to csvConfigDto.read.beneficiary,
+                        DomainName.Description to csvConfigDto.read.description,
                         *moneyFlow),
                 csvConfigDto.mappings.map(::mapping)))
     }
