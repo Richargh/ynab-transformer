@@ -24,7 +24,7 @@ internal class CsvReaderTest {
                         Beneficiary to "Empfänger",
                         Description to "Verwendungszweck",
                         MoneyFlow.PlusMinusFlow.Flow to "Umsatz")),
-                emptyList())
+                Mappings(emptyList()))
         val testling = CsvReader()
 
         // act
@@ -58,7 +58,7 @@ internal class CsvReaderTest {
                             Beneficiary to "Empfänger",
                             Description to "Verwendungszweck",
                             MoneyFlow.PlusMinusFlow.Flow to "Umsatz")),
-                emptyList())
+                Mappings(emptyList()))
         val testling = CsvReader()
 
         // act
@@ -93,7 +93,7 @@ internal class CsvReaderTest {
                             Description to "Verwendungszweck",
                             MoneyFlow.InOutFlow.OutFlow to "Soll",
                             MoneyFlow.InOutFlow.InFlow to "Haben")),
-                emptyList())
+                Mappings(emptyList()))
         val testling = CsvReader()
 
         // act
@@ -128,7 +128,7 @@ internal class CsvReaderTest {
                             Description to "Verwendungszweck",
                             MoneyFlow.MarkerFlow.Flow to "Umsatz",
                             MoneyFlow.MarkerFlow.Marker("H", "S") to " ")),
-                emptyList())
+                Mappings(emptyList()))
         val testling = CsvReader()
 
         // act
@@ -163,7 +163,7 @@ internal class CsvReaderTest {
                             Description to "Verwendungszweck",
                             MoneyFlow.MarkerFlow.Flow to "Umsatz",
                             MoneyFlow.MarkerFlow.Marker("H", "S") to " ")),
-                emptyList())
+                Mappings(emptyList()))
         val testling = CsvReader()
 
         // act
@@ -194,7 +194,7 @@ internal class CsvReaderTest {
                     Description to "Payment Details",
                     MoneyFlow.InOutFlow.OutFlow to "Debit",
                     MoneyFlow.InOutFlow.InFlow to "Credit")),
-                emptyList())
+                Mappings(emptyList()))
         val testling = CsvReader()
 
         // act
@@ -225,7 +225,7 @@ internal class CsvReaderTest {
                     Description to "Vorgang/Verwendungszweck",
                     MoneyFlow.InOutFlow.OutFlow to "Umsatz",
                     MoneyFlow.InOutFlow.InFlow to "W�hrung")),
-                emptyList())
+                Mappings(emptyList()))
         val testling = CsvReader()
 
         // act

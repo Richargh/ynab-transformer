@@ -9,15 +9,8 @@ import java.time.format.DateTimeFormatter
 
 class CsvConfig(
         val read: ReadConfig,
-        val mappings: List<Mapping>
-) {
-    fun mappingWith(beneficiary: Beneficiary, description: Description): Mapping? {
-        return mappings.firstOrNull { m ->
-            (m.alias.beneficiary.isEmpty() || m.alias.beneficiary.firstOrNull { alias -> beneficiary.contains(alias) } != null)
-            && (m.alias.description.isEmpty() || m.alias.description.firstOrNull { alias -> description.contains(alias) } != null)
-        }
-    }
-}
+        val mappings: Mappings
+)
 
 class ReadConfig(
         val dateFormatter: DateTimeFormatter,
@@ -47,6 +40,19 @@ class CsvHeaders private constructor(
             return CsvHeaders(map)
         }
     }
+}
+
+class Mappings(
+        private val mappings: List<Mapping>
+): Iterable<Mapping>{
+    fun mappingWith(beneficiary: Beneficiary, description: Description): Mapping? {
+        return mappings.firstOrNull { m ->
+            (m.alias.beneficiary.isEmpty() || m.alias.beneficiary.firstOrNull { alias -> beneficiary.contains(alias) } != null)
+                    && (m.alias.description.isEmpty() || m.alias.description.firstOrNull { alias -> description.contains(alias) } != null)
+        }
+    }
+
+    override fun iterator() = mappings.iterator()
 }
 
 data class Mapping(

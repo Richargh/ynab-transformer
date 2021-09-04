@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter
 
 fun configOf(vararg mappings: Mapping) = CsvConfig(
         anyReadConfig(),
-        mappings.asList())
+        Mappings(mappings.asList()))
 
 private fun anyReadConfig() = ReadConfig(
         anyDatePattern(),

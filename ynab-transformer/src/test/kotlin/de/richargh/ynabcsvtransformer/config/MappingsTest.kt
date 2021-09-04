@@ -1,10 +1,11 @@
 package de.richargh.ynabcsvtransformer.config
 
 import de.richargh.ynabcsvtransformer.domain.*
+import de.richargh.ynabcsvtransformer.input.Mappings
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class CsvConfigTest {
+class MappingsTest {
 
     @Test
     fun `should find mapping when single beneficiary alias matches exactly`(){
@@ -13,7 +14,7 @@ class CsvConfigTest {
                 category = "Monthly Bills: Rent",
                 beneficiary = "Rentmaster",
                 alias = Beneficiary("John Master Smith"))
-        val testling = configOf(mapping)
+        val testling = Mappings(listOf(mapping))
 
         // when
         val result = testling.mappingWith(Beneficiary("John Master Smith"), Description("My Rent for the Month"))
@@ -29,7 +30,7 @@ class CsvConfigTest {
                 category = "Monthly Bills: Rent",
                 beneficiary = "Rentmaster",
                 alias = Beneficiary("Master"))
-        val testling = configOf(mapping)
+        val testling = Mappings(listOf(mapping))
 
         // when
         val result = testling.mappingWith(Beneficiary("John Master Smith"), Description("My Rent for the Month"))
@@ -45,7 +46,7 @@ class CsvConfigTest {
                 category = "Monthly Bills: Rent",
                 beneficiary = "Rentmaster",
                 alias = Beneficiary("Steve"), Beneficiary("Master"))
-        val testling = configOf(mapping)
+        val testling = Mappings(listOf(mapping))
 
         // when
         val result = testling.mappingWith(Beneficiary("John Master Smith"), Description("My Rent for the Month"))
@@ -61,7 +62,7 @@ class CsvConfigTest {
                 category = "Monthly Bills: Rent",
                 beneficiary = "Rentmaster",
                 alias = Beneficiary("John Master Smith"))
-        val testling = configOf(mapping)
+        val testling = Mappings(listOf(mapping))
 
         // when
         val result = testling.mappingWith(Beneficiary("Jim Close"), Description("My Rent for the Month"))
@@ -77,7 +78,7 @@ class CsvConfigTest {
                 category = "Monthly Bills: Rent",
                 beneficiary = "Rentmaster",
                 alias = Description("My Rent for the Month"))
-        val testling = configOf(mapping)
+        val testling = Mappings(listOf(mapping))
 
         // when
         val result = testling.mappingWith(Beneficiary("John Master Smith"), Description("My Rent for the Month"))
@@ -93,7 +94,7 @@ class CsvConfigTest {
                 category = "Monthly Bills: Rent",
                 beneficiary = "Rentmaster",
                 alias = Description("Rent"))
-        val testling = configOf(mapping)
+        val testling = Mappings(listOf(mapping))
 
         // when
         val result = testling.mappingWith(Beneficiary("John Master Smith"), Description("My Rent for the Month"))
@@ -111,7 +112,7 @@ class CsvConfigTest {
                 category = "Monthly Bills: Rent",
                 beneficiary = "Rentmaster",
                 alias = Description("Mortgage"), Description("Rent"))
-        val testling = configOf(mapping)
+        val testling = Mappings(listOf(mapping))
 
         // when
         val result = testling.mappingWith(Beneficiary("John Master Smith"), Description("My Rent for the Month"))
@@ -127,7 +128,7 @@ class CsvConfigTest {
                 category = "Monthly Bills: Rent",
                 beneficiary = "Rentmaster",
                 alias = Description("My Rent for the Month"))
-        val testling = configOf(mapping)
+        val testling = Mappings(listOf(mapping))
 
         // when
         val result = testling.mappingWith(Beneficiary("John Master Smith"), Description("My Blue Jeans"))
@@ -145,7 +146,7 @@ class CsvConfigTest {
                 Beneficiary("Master"),
                 Description("Rent"),
                 aliasOutflow = null)
-        val testling = configOf(mapping)
+        val testling = Mappings(listOf(mapping))
 
         // when
         val result = testling.mappingWith(Beneficiary("John Master Smith"), Description("My Rent for the Month"))
@@ -163,7 +164,7 @@ class CsvConfigTest {
                 Beneficiary("Steve"),
                 Description("Rent"),
                 aliasOutflow = null)
-        val testling = configOf(mapping)
+        val testling = Mappings(listOf(mapping))
 
         // when
         val result = testling.mappingWith(Beneficiary("John Master Smith"), Description("My Blue Jeans"))

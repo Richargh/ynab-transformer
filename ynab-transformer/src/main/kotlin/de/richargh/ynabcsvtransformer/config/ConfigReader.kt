@@ -47,7 +47,7 @@ class ConfigReader {
                             DomainName.Beneficiary to csvConfigDto.read.beneficiary,
                             DomainName.Description to csvConfigDto.read.description,
                             *moneyFlow)),
-                csvConfigDto.mappings.map(::mapping)))
+                Mappings(csvConfigDto.mappings.map(::mapping))))
     }
 
     private fun mapping(mappingDto: MappingDto) = Mapping(
