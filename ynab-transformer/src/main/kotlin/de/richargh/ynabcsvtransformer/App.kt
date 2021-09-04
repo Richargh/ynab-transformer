@@ -11,17 +11,17 @@ import java.io.InputStream
 class App {
 
     private val configReader = ConfigReader()
-    private val importer = CsvReader()
-    private val exporter = YnabCsvWriter()
+    private val reader = CsvReader()
+    private val writer = YnabCsvWriter()
 
     fun readConfig(config: InputStream): Res<CsvConfig>{
         return configReader.csvConfig(config)
     }
 
     fun transform(csv: InputStream, config: CsvConfig){
-        val results = importer.mapTransactions(csv, config)
+        val results = reader.mapTransactions(csv, config)
                 .map { transform(it, config) }
-        exporter.mapTransactions(results)
+        writer.mapTransactions(results)
     }
 
     private fun transform(transaction: Transaction, csvConfig: CsvConfig): Transaction {
