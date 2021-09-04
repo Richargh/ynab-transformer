@@ -8,7 +8,7 @@ import de.richargh.ynabcsvtransformer.domain.Beneficiary
 import de.richargh.ynabcsvtransformer.domain.Category
 import de.richargh.ynabcsvtransformer.domain.Description
 import de.richargh.ynabcsvtransformer.domain.Outflow
-import de.richargh.ynabcsvtransformer.input.*
+import de.richargh.ynabcsvtransformer.read.*
 import de.richargh.ynabcsvtransformer.lang.Res
 import de.richargh.ynabcsvtransformer.lang.fail
 import de.richargh.ynabcsvtransformer.lang.ok

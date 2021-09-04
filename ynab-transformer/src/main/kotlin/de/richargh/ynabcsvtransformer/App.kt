@@ -2,10 +2,10 @@ package de.richargh.ynabcsvtransformer
 
 import de.richargh.ynabcsvtransformer.config.ConfigReader
 import de.richargh.ynabcsvtransformer.domain.Transaction
-import de.richargh.ynabcsvtransformer.export.YnabCsvWriter
-import de.richargh.ynabcsvtransformer.input.CsvConfig
-import de.richargh.ynabcsvtransformer.input.CsvReader
-import de.richargh.ynabcsvtransformer.input.Mappings
+import de.richargh.ynabcsvtransformer.write.YnabCsvWriter
+import de.richargh.ynabcsvtransformer.read.CsvConfig
+import de.richargh.ynabcsvtransformer.read.CsvReader
+import de.richargh.ynabcsvtransformer.read.Mappings
 import de.richargh.ynabcsvtransformer.lang.Res
 import java.io.InputStream
 

@@ -1,7 +1,7 @@
 package de.richargh.ynabcsvtransformer.config
 
 import de.richargh.ynabcsvtransformer.domain.*
-import de.richargh.ynabcsvtransformer.input.Mappings
+import de.richargh.ynabcsvtransformer.read.Mappings
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

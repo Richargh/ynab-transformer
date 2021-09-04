@@ -1,4 +1,4 @@
-package de.richargh.ynabcsvtransformer.input
+package de.richargh.ynabcsvtransformer.read
 
 import de.richargh.ynabcsvtransformer.domain.*
 import org.apache.commons.csv.CSVFormat

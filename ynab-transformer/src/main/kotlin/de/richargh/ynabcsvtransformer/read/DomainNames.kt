@@ -1,4 +1,4 @@
-package de.richargh.ynabcsvtransformer.input
+package de.richargh.ynabcsvtransformer.read
 
 sealed class DomainName {
     override fun toString(): String = javaClass.simpleName

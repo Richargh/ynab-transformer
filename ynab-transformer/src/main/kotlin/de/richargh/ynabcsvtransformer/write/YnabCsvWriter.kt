@@ -1,4 +1,4 @@
-package de.richargh.ynabcsvtransformer.export
+package de.richargh.ynabcsvtransformer.write
 
 import de.richargh.ynabcsvtransformer.domain.Transaction
 

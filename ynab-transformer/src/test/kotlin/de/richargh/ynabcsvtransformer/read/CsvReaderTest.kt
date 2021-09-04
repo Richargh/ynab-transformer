@@ -1,7 +1,7 @@
-package de.richargh.ynabcsvtransformer.input
+package de.richargh.ynabcsvtransformer.read
 
 import de.richargh.ynabcsvtransformer.domain.Transaction
-import de.richargh.ynabcsvtransformer.input.DomainName.*
+import de.richargh.ynabcsvtransformer.read.DomainName.*
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
