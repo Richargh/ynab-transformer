@@ -9,12 +9,18 @@ import java.time.format.DateTimeFormatter
 
 class CsvConfig(
         val read: ReadConfig,
+        val write: WriteConfig,
         val mappings: Mappings
 )
 
 class ReadConfig(
         val dateFormatter: DateTimeFormatter,
+        val delimiter: Char,
         val headers: CsvHeaders
+)
+
+class WriteConfig(
+        val delimiter: Char
 )
 
 class CsvHeaders private constructor(

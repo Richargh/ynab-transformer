@@ -16,7 +16,7 @@ class CsvReader {
 
     fun mapTransactions(inputStream: InputStream, config: CsvConfig): Sequence<Transaction> {
         val csvParser = CSVFormat.DEFAULT
-                .withDelimiter(';')
+                .withDelimiter(config.read.delimiter)
                 .withQuote('"')
         return sequence {
             val records: CSVParser = csvParser.parse(InputStreamReader(inputStream))

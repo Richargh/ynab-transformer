@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo
 
 class CsvConfigDto(
         val read: ReadDto,
+        val write: WriteDto,
         val mappings: List<MappingDto>
 )
 
@@ -13,7 +14,13 @@ class ReadDto(
         val bookingDate: String,
         val beneficiary: String,
         val description: String,
-        val flow: FlowDto
+        val flow: FlowDto,
+
+        val delimiter: Char
+)
+
+class WriteDto(
+        val delimiter: Char
 )
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type")

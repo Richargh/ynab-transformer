@@ -6,11 +6,17 @@ import java.time.format.DateTimeFormatter
 
 fun configOf(vararg mappings: Mapping) = CsvConfig(
         anyReadConfig(),
+        anyWriteConfig(),
         Mappings(mappings.asList()))
 
 private fun anyReadConfig() = ReadConfig(
         anyDatePattern(),
+        ';',
         anyHeaders()
+)
+
+private fun anyWriteConfig() = WriteConfig(
+        ';'
 )
 
 private fun anyDatePattern() = DateTimeFormatter.ofPattern("MM/dd/uuuu")

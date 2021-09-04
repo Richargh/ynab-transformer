@@ -8,7 +8,12 @@
       "@type":"InOut",
       "inFlow": "Credit",
       "outFlow": "Debit"
-    }
+    },
+
+    "delimiter": ";"
+  },
+  "write" : {
+    "delimiter": ";"
   },
   "mappings": [
     {

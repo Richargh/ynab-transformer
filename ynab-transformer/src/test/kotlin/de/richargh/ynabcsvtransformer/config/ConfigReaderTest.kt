@@ -23,7 +23,12 @@ class ConfigReaderTest {
             "flow": {
                 "@type":"PlusMinus",
                 "flow": "Sales"
-            }
+            },
+            
+            "delimiter": ";"
+          },
+          "write" : {
+            "delimiter": ";"
           },
           "mappings": []
         }
@@ -58,7 +63,12 @@ class ConfigReaderTest {
                 "@type":"InOut",
                 "inFlow": "Credit",
                 "outFlow": "Debit"
-            }
+            },
+            
+            "delimiter": ";"
+          },
+          "write" : {
+            "delimiter": ";"
           },
           "mappings": []
         }
@@ -96,7 +106,12 @@ class ConfigReaderTest {
                 "marker": " ",
                 "markerInFlow": "H",
                 "markerOutFlow": "S"
-            }
+            },
+            
+            "delimiter": ";"
+          },
+          "write": {
+            "delimiter": ";"
           },
           "mappings": []
         }
@@ -122,6 +137,51 @@ class ConfigReaderTest {
     }
 
     @Test
+    fun `should be able to read delimiter mapping`(){
+        // given
+        val config = """
+        {
+          "read": {
+            "bookingDatePattern": "MM/dd/uuuu",
+            "bookingDate": "Booking date",
+            "beneficiary": "Beneficiary / Originator",
+            "description": "Payment Details",
+            "flow": {
+                "@type":"InOut",
+                "inFlow": "Credit",
+                "outFlow": "Debit"
+            },
+            
+            "delimiter": ","
+          },
+          "write": {
+            "delimiter": "|"
+          },
+          "mappings": [
+            {
+              "category" : "Monthly Bills: Energy",
+              "beneficiary" : "Powerplant",
+              "alias": {
+                "beneficiary" : ["POWER"]
+              }
+            }
+          ]
+        }
+        """.trimIndent()
+        val testling = ConfigReader()
+
+        // when
+        val result = config.byteInputStream().use {
+            testling.csvConfig(it)
+        }
+
+        // then
+        assertThat(result).isInstanceOf(Res.Ok::class.java)
+        assertThat((result as Res.Ok<CsvConfig>).value.read.delimiter).isEqualTo(',')
+        assertThat(result.value.write.delimiter).isEqualTo('|')
+    }
+
+    @Test
     fun `should be able to read beneficiary mapping`(){
         // given
         val config = """
@@ -135,7 +195,12 @@ class ConfigReaderTest {
                 "@type":"InOut",
                 "inFlow": "Credit",
                 "outFlow": "Debit"
-            }
+            },
+            
+            "delimiter": ";"
+          },
+          "write": {
+            "delimiter": ";"
           },
           "mappings": [
             {
@@ -175,7 +240,12 @@ class ConfigReaderTest {
                 "@type":"InOut",
                 "inFlow": "Credit",
                 "outFlow": "Debit"
-            }
+            },
+            
+            "delimiter": ";"
+          },
+          "write": {
+            "delimiter": ";"
           },
           "mappings": [
             {
@@ -216,7 +286,12 @@ class ConfigReaderTest {
                 "@type":"InOut",
                 "inFlow": "Credit",
                 "outFlow": "Debit"
-            }
+            },
+            
+            "delimiter": ";"
+          },
+          "write": {
+            "delimiter": ";"
           },
           "mappings": [
             {

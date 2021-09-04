@@ -23,7 +23,7 @@ class App {
     fun transform(csv: InputStream, config: CsvConfig, writer: Writer){
         val results = reader.mapTransactions(csv, config)
                 .map { transform(it, config.mappings) }
-        csvWriter.mapTransactions(results, writer)
+        csvWriter.mapTransactions(results, config.write, writer)
     }
 
     private fun transform(transaction: Transaction, mappings: Mappings): Transaction {
