@@ -32,7 +32,9 @@ class Cli : Callable<Int> {
             println("Config is not correct. Problems: ${configResult.messages}")
             return 1
         }
-        app.transform(csv.inputStream(), (configResult as Res.Ok).value, System.out.writer())
+        (outputFile?.writer() ?: System.out.writer()).use { outputWriter ->
+            app.transform(csv.inputStream(), (configResult as Res.Ok).value, outputWriter)
+        }
 
         return 0
     }
@@ -44,10 +46,6 @@ class Cli : Callable<Int> {
         }
         if(!config.exists()){
             println("${Cli::config.name}=${config.absolutePath} does not exist.")
-            return 1
-        }
-        if(outputFile != null && !outputFile.exists()){
-            println("${Cli::outputFile.name}=${outputFile.absolutePath} does not exist.")
             return 1
         }
 
