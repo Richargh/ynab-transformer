@@ -11,7 +11,7 @@ internal class CsvReaderTest {
 
     @Test
     fun `should be able to read singular german plusminus OutFlow transaction`(){
-        // arrange
+        // given
         val csv = """
         "Buchung";"Empfänger";"Verwendungszweck";"Währung";"Umsatz"
         "21.02.2020";"John Mopp";"Laundry";"EUR";"-120"
@@ -27,13 +27,12 @@ internal class CsvReaderTest {
                 Mappings(emptyList()))
         val testling = CsvReader()
 
-        // act
+        // when
         val result = csv.byteInputStream().use {
-            // act
             testling.mapTransactions(it, csvConfig).toList()
         }
 
-        // assert
+        // then
         assertThat(result).containsExactly(Transaction(
                 LocalDate.of(2020,2,21),
                 de.richargh.ynabcsvtransformer.domain.Beneficiary("John Mopp"),
@@ -45,7 +44,7 @@ internal class CsvReaderTest {
 
     @Test
     fun `should be able to read singular german plusminus InFlow transaction`(){
-        // arrange
+        // given
         val csv = """
         "Buchung";"Empfänger";"Verwendungszweck";"Währung";"Umsatz"
         "21.02.2020";"John Mopp";"Laundry";"EUR";"120"
@@ -61,13 +60,12 @@ internal class CsvReaderTest {
                 Mappings(emptyList()))
         val testling = CsvReader()
 
-        // act
+        // when
         val result = csv.byteInputStream().use {
-            // act
             testling.mapTransactions(it, csvConfig).toList()
         }
 
-        // assert
+        // then
         assertThat(result).containsExactly(Transaction(
                 LocalDate.of(2020,2,21),
                 de.richargh.ynabcsvtransformer.domain.Beneficiary("John Mopp"),
@@ -79,7 +77,7 @@ internal class CsvReaderTest {
 
     @Test
     fun `should be able to read singular german inout flow transaction`(){
-        // arrange
+        // given
         val csv = """
         "Buchung";"Empfänger";"Verwendungszweck";"Währung";"Soll";"Haben"
         "21.02.2020";"John Mopp";"Laundry";"EUR";"120";"0"
@@ -96,13 +94,12 @@ internal class CsvReaderTest {
                 Mappings(emptyList()))
         val testling = CsvReader()
 
-        // act
+        // when
         val result = csv.byteInputStream().use {
-            // act
             testling.mapTransactions(it, csvConfig).toList()
         }
 
-        // assert
+        // then
         assertThat(result).containsExactly(Transaction(
                 LocalDate.of(2020,2,21),
                 de.richargh.ynabcsvtransformer.domain.Beneficiary("John Mopp"),
@@ -114,7 +111,7 @@ internal class CsvReaderTest {
 
     @Test
     fun `should be able to read singular german marker OutFlow transaction`(){
-        // arrange
+        // given
         val csv = """
         "Buchung";"Empfänger";"Verwendungszweck";"Währung";"Umsatz";" "
         "21.02.2020";"John Mopp";"Laundry";"EUR";"120";"S"
@@ -131,13 +128,12 @@ internal class CsvReaderTest {
                 Mappings(emptyList()))
         val testling = CsvReader()
 
-        // act
+        // when
         val result = csv.byteInputStream().use {
-            // act
             testling.mapTransactions(it, csvConfig).toList()
         }
 
-        // assert
+        // then
         assertThat(result).containsExactly(Transaction(
                 LocalDate.of(2020,2,21),
                 de.richargh.ynabcsvtransformer.domain.Beneficiary("John Mopp"),
@@ -149,7 +145,7 @@ internal class CsvReaderTest {
 
     @Test
     fun `should be able to read singular german marker InFlow transaction`(){
-        // arrange
+        // given
         val csv = """
         "Buchung";"Empfänger";"Verwendungszweck";"Währung";"Umsatz";" "
         "21.02.2020";"John Mopp";"Laundry";"EUR";"120";"H"
@@ -166,13 +162,12 @@ internal class CsvReaderTest {
                 Mappings(emptyList()))
         val testling = CsvReader()
 
-        // act
+        // when
         val result = csv.byteInputStream().use {
-            // act
             testling.mapTransactions(it, csvConfig).toList()
         }
 
-        // assert
+        // then
         assertThat(result).containsExactly(Transaction(
                 LocalDate.of(2020,2,21),
                 de.richargh.ynabcsvtransformer.domain.Beneficiary("John Mopp"),
@@ -184,7 +179,7 @@ internal class CsvReaderTest {
 
     @Test
     fun `should be able to read english singular DB transaction`(){
-        // arrange
+        // given
         val csvConfig = CsvConfig(
                 ReadConfig(
                     DateTimeFormatter.ofPattern("MM/dd/uuuu"),
@@ -197,13 +192,12 @@ internal class CsvReaderTest {
                 Mappings(emptyList()))
         val testling = CsvReader()
 
-        // act
+        // when
         val result = javaClass.getResourceAsStream("DB-Transactions-Single1[EN].csv").use {
-            // act
             testling.mapTransactions(it, csvConfig).toList()
         }
 
-        // assert
+        // then
         assertThat(result).containsExactly(Transaction(
                 LocalDate.of(2020,2,14),
                 de.richargh.ynabcsvtransformer.domain.Beneficiary("ANACONDA EU"),
@@ -215,7 +209,7 @@ internal class CsvReaderTest {
 
     @Test
     fun `should be able to read german singular VR transaction`(){
-        // arrange
+        // given
         val csvConfig = CsvConfig(
                 ReadConfig(
                     DateTimeFormatter.ofPattern("dd.MM.uuuu"),
@@ -228,13 +222,12 @@ internal class CsvReaderTest {
                 Mappings(emptyList()))
         val testling = CsvReader()
 
-        // act
+        // when
         val result = javaClass.getResourceAsStream("VR-Transactions-Single1[DE].csv").use {
-            // act
             testling.mapTransactions(it, csvConfig).toList()
         }
 
-        // assert
+        // then
         assertThat(result).containsExactly(Transaction(
                 LocalDate.of(2020,3,23),
                 de.richargh.ynabcsvtransformer.domain.Beneficiary("Worldline Sweden AB fuer Clamp"),

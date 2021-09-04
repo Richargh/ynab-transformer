@@ -32,7 +32,6 @@ class ConfigReaderTest {
 
         // when
         val result = config.byteInputStream().use {
-            // act
             testling.csvConfig(it)
         }
 
@@ -68,7 +67,6 @@ class ConfigReaderTest {
 
         // when
         val result = config.byteInputStream().use {
-            // act
             testling.csvConfig(it)
         }
 
@@ -107,7 +105,6 @@ class ConfigReaderTest {
 
         // when
         val result = config.byteInputStream().use {
-            // act
             testling.csvConfig(it)
         }
 
@@ -155,7 +152,6 @@ class ConfigReaderTest {
 
         // when
         val result = config.byteInputStream().use {
-            // act
             testling.csvConfig(it)
         }
 
@@ -196,7 +192,6 @@ class ConfigReaderTest {
 
         // when
         val result = config.byteInputStream().use {
-            // act
             testling.csvConfig(it)
         }
 
@@ -238,7 +233,6 @@ class ConfigReaderTest {
 
         // when
         val result = config.byteInputStream().use {
-            // act
             testling.csvConfig(it)
         }
 
