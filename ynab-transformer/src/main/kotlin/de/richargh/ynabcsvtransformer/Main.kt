@@ -1,10 +1,5 @@
 package de.richargh.ynabcsvtransformer
 
-import de.richargh.ynabcsvtransformer.config.ConfigReader
-import de.richargh.ynabcsvtransformer.domain.Transaction
-import de.richargh.ynabcsvtransformer.export.YnabCsvWriter
-import de.richargh.ynabcsvtransformer.input.CsvConfig
-import de.richargh.ynabcsvtransformer.input.CsvReader
 import de.richargh.ynabcsvtransformer.result.Res
 import picocli.CommandLine
 import picocli.CommandLine.*
@@ -30,26 +25,16 @@ class Checksum : Callable<Int> {
         if(filesExist != 0)
             return filesExist
 
-        val configReader = ConfigReader()
-        val importer = CsvReader()
-        val exporter = YnabCsvWriter()
+        val app = App()
 
-        val configResult = configReader.csvConfig(config.inputStream())
+        val configResult = app.readConfig(config.inputStream())
         if(configResult is Res.Fail){
             println("Config is not correct. Problems: ${configResult.messages}")
             return 1
         }
+        app.transform(csv.inputStream(), (configResult as Res.Ok).value)
 
-
-        val results = importer.mapTransactions(csv.inputStream(), (configResult as Res.Ok).value)
-                .map { transform(it, configResult.value) }
-        exporter.mapTransactions(results)
         return 0
-    }
-
-    private fun transform(transaction: Transaction, csvConfig: CsvConfig): Transaction{
-        val mapping = csvConfig.mappingWith(transaction.beneficiary, transaction.description)
-        return transaction.withMapping(mapping)
     }
 
     private fun ensureFilesExist(): Int {
