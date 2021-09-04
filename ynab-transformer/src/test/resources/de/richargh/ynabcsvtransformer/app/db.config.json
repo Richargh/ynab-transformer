@@ -1,0 +1,23 @@
+{
+  "read": {
+    "bookingDatePattern": "MM/dd/uuuu",
+    "bookingDate": "Booking date",
+    "beneficiary": "Beneficiary / Originator",
+    "description": "Payment Details",
+    "flow": {
+      "@type":"InOut",
+      "inFlow": "Credit",
+      "outFlow": "Debit"
+    }
+  },
+  "mappings": [
+    {
+      "category" : "Entertainment: Gadget",
+      "beneficiary" : "Anaconda",
+      "alias": {
+        "beneficiary" : ["ANACONDA EU"],
+        "description": ["Notebook"]
+      }
+    }
+  ]
+}
