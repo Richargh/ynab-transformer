@@ -4,6 +4,8 @@ import de.richargh.ynabcsvtransformer.domain.Transaction
 import de.richargh.ynabcsvtransformer.read.DomainName.*
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import java.math.BigDecimal
+import java.math.BigDecimal.ZERO
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -39,8 +41,8 @@ internal class CsvReaderTest {
                 de.richargh.ynabcsvtransformer.domain.Beneficiary("John Mopp"),
                 de.richargh.ynabcsvtransformer.domain.Description("Laundry"),
                 null,
-                "120",
-                "0"))
+                BigDecimal("120"),
+                ZERO))
     }
 
     @Test
@@ -72,8 +74,8 @@ internal class CsvReaderTest {
                 de.richargh.ynabcsvtransformer.domain.Beneficiary("John Mopp"),
                 de.richargh.ynabcsvtransformer.domain.Description("Laundry"),
                 null,
-                "0",
-                "120"))
+                ZERO,
+                BigDecimal("120")))
     }
 
     @Test
@@ -106,8 +108,8 @@ internal class CsvReaderTest {
                 de.richargh.ynabcsvtransformer.domain.Beneficiary("John Mopp"),
                 de.richargh.ynabcsvtransformer.domain.Description("Laundry"),
                 null,
-                "120",
-                "0"))
+                BigDecimal("120"),
+                ZERO))
     }
 
     @Test
@@ -140,8 +142,8 @@ internal class CsvReaderTest {
                 de.richargh.ynabcsvtransformer.domain.Beneficiary("John Mopp"),
                 de.richargh.ynabcsvtransformer.domain.Description("Laundry"),
                 null,
-                "120",
-                "0"))
+                BigDecimal("120"),
+                ZERO))
     }
 
     @Test
@@ -174,8 +176,8 @@ internal class CsvReaderTest {
                 de.richargh.ynabcsvtransformer.domain.Beneficiary("John Mopp"),
                 de.richargh.ynabcsvtransformer.domain.Description("Laundry"),
                 null,
-                "0",
-                "120"))
+                ZERO,
+                BigDecimal("120")))
     }
 
     @Test
@@ -204,8 +206,8 @@ internal class CsvReaderTest {
                 de.richargh.ynabcsvtransformer.domain.Beneficiary("ANACONDA EU"),
                 de.richargh.ynabcsvtransformer.domain.Description("111-222222-3333333 Anaconda.de"),
                 null,
-                "150.12",
-                ""))
+                BigDecimal("150.12"),
+                ZERO))
     }
 
     @Test
@@ -237,8 +239,8 @@ internal class CsvReaderTest {
                     SHELL 1122/ Frankfurt/DE
                     22.03.2021 um 09:12:34 Uhr""".trimIndent()),
                 null,
-                "33.33",
-                "0"))
+                BigDecimal("33.33"),
+                ZERO))
     }
 
 }

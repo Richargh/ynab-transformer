@@ -7,6 +7,7 @@ import org.apache.commons.csv.CSVRecord
 import java.io.InputStream
 import java.io.InputStreamReader
 import java.math.BigDecimal
+import java.math.BigDecimal.*
 import java.text.DecimalFormat
 import java.time.LocalDate
 import java.time.format.DateTimeParseException
@@ -56,16 +57,16 @@ class CsvReader {
 
         val (inFlow, outFlow) = if(indexOf.containsKey(DomainName.MoneyFlow.InOutFlow.InFlow)){
             Pair(
-                    csvRecord.numberOrNull(DomainName.MoneyFlow.InOutFlow.InFlow, config)?.abs()?.toString() ?: "",
-                    csvRecord.numberOrNull(DomainName.MoneyFlow.InOutFlow.OutFlow, config)?.abs()?.toString() ?: "")
+                    csvRecord.numberOrNull(DomainName.MoneyFlow.InOutFlow.InFlow, config)?.abs() ?: ZERO,
+                    csvRecord.numberOrNull(DomainName.MoneyFlow.InOutFlow.OutFlow, config)?.abs() ?: ZERO)
         } else if(indexOf.containsKey(DomainName.MoneyFlow.PlusMinusFlow.Flow)){
             val flow = csvRecord.numberOrNull(DomainName.MoneyFlow.PlusMinusFlow.Flow, config)
             if(flow == null)
-                Pair("", "")
+                Pair(ZERO, ZERO)
             else
                 Pair(
-                    if(flow < BigDecimal.ZERO) "0" else "${flow.abs()}",
-                    if(flow < BigDecimal.ZERO) "${flow.abs()}" else "0")
+                    if(flow < ZERO) ZERO else flow.abs(),
+                    if(flow < ZERO) flow.abs() else ZERO)
         }  else if(indexOf.containsKey(DomainName.MoneyFlow.MarkerFlow.Flow)){
             val flow = csvRecord.numberOrNull(DomainName.MoneyFlow.MarkerFlow.Flow, config)?.abs()
             // FIXME this line is slow because it is repeated so often.
@@ -74,13 +75,13 @@ class CsvReader {
             val marker = csvRecord.get(indexOf[m]!!).trim()
 
             if(flow == null)
-                Pair("", "")
+                Pair(ZERO, ZERO)
             else
                 Pair(
-                        if(marker == m.inFlowMarker) "$flow" else "0",
-                        if(marker == m.outFlowMarker) "$flow" else "0")
+                        if(marker == m.inFlowMarker) flow else ZERO,
+                        if(marker == m.outFlowMarker) flow else ZERO)
         } else {
-            Pair("", "")
+            Pair(ZERO, ZERO)
         }
 
         val beneficiary = Beneficiary(rawBeneficiary)

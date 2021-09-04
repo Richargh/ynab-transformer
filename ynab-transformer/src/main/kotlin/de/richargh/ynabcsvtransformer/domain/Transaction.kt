@@ -1,6 +1,7 @@
 package de.richargh.ynabcsvtransformer.domain
 
 import de.richargh.ynabcsvtransformer.read.Mapping
+import java.math.BigDecimal
 import java.time.LocalDate
 
 data class Transaction(
@@ -8,8 +9,8 @@ data class Transaction(
         val beneficiary: Beneficiary,
         val description: Description,
         val category: Category?,
-        val outFlow: String,
-        val inFlow: String) {
+        val outFlow: BigDecimal,
+        val inFlow: BigDecimal) {
     fun withMapping(mapping: Mapping?): Transaction {
         if(mapping == null)
             return this
@@ -24,9 +25,6 @@ data class Transaction(
     }
 }
 
-data class BookingDate(val rawValue: String){
-    override fun toString() = rawValue
-}
 data class Beneficiary(val rawValue: String){
     override fun toString() = rawValue
     fun contains(beneficiary: Beneficiary) = rawValue.contains(beneficiary.rawValue)

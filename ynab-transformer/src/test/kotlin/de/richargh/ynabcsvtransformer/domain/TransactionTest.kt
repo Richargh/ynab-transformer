@@ -3,6 +3,8 @@ package de.richargh.ynabcsvtransformer.domain
 import de.richargh.ynabcsvtransformer.config.mappingOf
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import java.math.BigDecimal
+import java.math.BigDecimal.ZERO
 import java.time.LocalDate
 
 class TransactionTest {
@@ -13,7 +15,7 @@ class TransactionTest {
     fun `should not change the transaction when the mapping is null`(){
         // given
         val testling = Transaction(
-                anyDate, Beneficiary("Thomas"), Description("lunch sandwich"), null, "0", "0")
+                anyDate, Beneficiary("Thomas"), Description("lunch sandwich"), null, ZERO, ZERO)
 
         // when
         val result = testling.withMapping(null)
@@ -30,7 +32,7 @@ class TransactionTest {
                 beneficiary = "Rentmaster",
                 alias = Description("Mortgage"), Description("Rent"))
         val testling = Transaction(
-                anyDate, Beneficiary("Thomas"), Description("lunch sandwich"), null, "0", "0")
+                anyDate, Beneficiary("Thomas"), Description("lunch sandwich"), null, ZERO, ZERO)
 
         // when
         val result = testling.withMapping(mapping)
@@ -38,6 +40,6 @@ class TransactionTest {
         // then
         assertThat(result).isEqualTo(Transaction(
                 anyDate, Beneficiary("Rentmaster"), Description("lunch sandwich"), Category("Food: Restaurant"),
-                "0", "0"))
+                ZERO, ZERO))
     }
 }
